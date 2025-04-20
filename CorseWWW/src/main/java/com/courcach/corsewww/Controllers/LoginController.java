@@ -1,19 +1,15 @@
 package com.courcach.corsewww.Controllers;
 
+import com.courcach.Server.Services.AuthRequest;
+import com.courcach.Server.Services.AuthResponse;
 import com.courcach.corsewww.Models.ConnectionToServer;
 import com.courcach.corsewww.Models.Model;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 public class LoginController {
     @FXML
@@ -45,30 +41,29 @@ public class LoginController {
                 showError("Пожалуйста, заполните все поля");
                 return;
             }
-            try {
-                ConnectionToServer connection = new ConnectionToServer();
-                connection.connect("localhost", 7777);
-                String role = connection.authenticate(login, password);
-                if (role == null) {
-                    showError("Неверно введён логин или пароль");
-                    return;
-                }
-                Stage stage = (Stage) enterBut.getScene().getWindow();
-                Model.getInstance().getViewFactory().closeStage(stage);
-                switch (role){
-                    case "admin":
-                        Model.getInstance().getViewFactory().showAdminWindow();
-                        break;
-                    case "employee":
-                        Model.getInstance().getViewFactory().showEmployeeWindow();
-                        break;
-                    case "client":
-                        Model.getInstance().getViewFactory().showClientWindow();
-                        break;
-                }
-            }catch (IOException | ClassNotFoundException ex) {
-                showError("Ошибка подключения к серверу");
-                ex.printStackTrace();
+            ConnectionToServer connection = Model.getInstance().getConnectionToServer();
+            connection.sendObject(new AuthRequest(login,password,"LOGIN"));
+            AuthResponse response = (AuthResponse) connection.receiveObject();
+            if(!response.isSuccess()){
+                showError("Вы заблокированы");
+                return;
+            }
+            if (response.getRole() == null) {
+                showError("Неверно введён логин или пароль");
+                return;
+            }
+            Stage stage = (Stage) enterBut.getScene().getWindow();
+            Model.getInstance().getViewFactory().closeStage(stage);
+            switch (response.getRole()){
+                case "admin":
+                    Model.getInstance().getViewFactory().showAdminWindow();
+                    break;
+                case "employee":
+                    Model.getInstance().getViewFactory().showEmployeeWindow();
+                    break;
+                case "client":
+                    Model.getInstance().getViewFactory().showClientWindow();
+                    break;
             }
         });
     }

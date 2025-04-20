@@ -1,5 +1,7 @@
 package com.courcach.corsewww.Models;
 
+import com.courcach.Server.Services.RegRequest;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -9,58 +11,38 @@ public class ConnectionToServer {
     private Socket userSocket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
+    private final int PORT = 7777;
+    private final String HOST = "localhost";
 
-    public void connect(String serverAddress, int port) {
+
+    public ConnectionToServer() {
         try {
-            userSocket = new Socket(serverAddress, port);
+            userSocket = new Socket(HOST, PORT);
             out = new ObjectOutputStream(userSocket.getOutputStream());
+            out.flush();
             in = new ObjectInputStream(userSocket.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
-    public String authenticate(String login, String password) throws IOException, ClassNotFoundException {
+    public synchronized void sendObject(Object obj){
         try {
-            String operationType = "LOGIN";
-            out.writeObject(operationType);
-            out.writeObject(login);
-            out.writeObject(password);
+            out.writeObject(obj);
             out.flush();
-            return (String) in.readObject();
-        } finally {
-            disconnect();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
-    
-    
-    public Boolean register(String email, String name, String surname, String login, String password) throws IOException, ClassNotFoundException {
-        try{
-            String operationType = "REGISTER";
-            out.writeObject(operationType);
-            out.writeObject(email);
-            out.writeObject(name);
-            out.writeObject(surname);
-            out.writeObject(login);
-            out.writeObject(password);
-            out.flush();
-            return (Boolean) in.readObject();
-        }finally {
-            disconnect();
-        }
-        
-    }
-    
-    public void disconnect() throws IOException {
+
+    public synchronized Object receiveObject() {
         try {
-            if (out != null) out.close();
-        } finally {
-            try {
-                if (in != null) in.close();
-            } finally {
-                if (userSocket != null) userSocket.close();
-            }
+            return in.readObject();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
+
 }

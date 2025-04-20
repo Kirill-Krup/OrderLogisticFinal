@@ -2,9 +2,7 @@ package com.courcach.Server.Handlers;
 
 
 
-import com.courcach.Server.Services.AuthResponse;
-import com.courcach.Server.Services.AuthService;
-import com.courcach.Server.Services.RegResponse;
+import com.courcach.Server.Services.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,56 +20,35 @@ public class UserHandler implements Runnable {
     public void run() {
         try (ObjectOutputStream out = new ObjectOutputStream(userSocket.getOutputStream());
              ObjectInputStream in = new ObjectInputStream(userSocket.getInputStream())) {
-
             out.flush();
-            String operationType = (String) in.readObject();
-            switch (operationType) {
-                case "LOGIN": {
-                    String login = (String) in.readObject();
-                    String password = (String) in.readObject();
-                    AuthService authService = new AuthService();
-                    AuthResponse response = authService.authenticate(login, password);
-                    String role = response.getRole();
-                    out.writeObject(role);
-                    out.flush();
+            Object autRequest = in.readObject();
+            if (autRequest instanceof AuthRequest authRequest) {
+                AuthService authService = new AuthService();
+                AuthResponse response = authService.authenticate(authRequest.getUsername(), authRequest.getPassword());
+                out.writeObject(response);
+                out.flush();
 
-                    if (role != null) {
-                        switch (role) {
-                            case "admin" -> new AdminHandler(userSocket, in, out).handle();
-                            case "employee" -> new EmployeeHandler(userSocket, in, out).handle();
-                            case "client" -> new ClientHandler(userSocket, in, out).handle();
-                        }
+                if (response.getRole() != null) {
+                    switch (response.getRole() ) {
+                        case "admin" -> new AdminHandler(userSocket, in, out).handle();
+                        case "employee" -> new EmployeeHandler(userSocket, in, out).handle();
+                        case "client" -> new ClientHandler(userSocket, in, out).handle();
                     }
-                    else {
-                        out.writeObject("Не правильно введён логин или пароль:" + response.getMessage());
-                        out.flush();
-                    }
-                    break;
                 }
-
-                case "REGISTER":{
-                    String email = (String) in.readObject();
-                    String name =  (String) in.readObject();
-                    String surname = (String) in.readObject();
-                    String login = (String) in.readObject();
-                    String password = (String) in.readObject();
-                    System.out.println("Получены данные от клиента на регистрацию:");
-                    System.out.println("Почта: " +email);
-                    System.out.println("Имя: " +name);
-                    System.out.println("Фамилия: " +surname);
-                    System.out.println("Логин: " +login);
-                    System.out.println("Пароль: " +password);
-                    AuthService authService = new AuthService();
-                    RegResponse response = authService.register(email, name, surname, login, password);
-                    Boolean isSuccess = response.isSuccess();
-                    out.writeObject(isSuccess);
+                else {
+                    out.writeObject("Не правильно введён логин или пароль:" + response.getMessage());
                     out.flush();
-                    if(isSuccess) {
-                        new ClientHandler(userSocket, in, out).handle();
-                    }else {
-                        System.out.println(response.getMessage());
-                    }
-                    break;
+                }
+            }
+            if (autRequest instanceof RegRequest regRequest) {
+                AuthService authService = new AuthService();
+                RegResponse response = authService.register(regRequest.getEmail(),regRequest.getName(), regRequest.getSurname(), regRequest.getLogin(),regRequest.getPassword());
+                out.writeObject(response);
+                out.flush();
+                if(response.isSuccess()) {
+                    new ClientHandler(userSocket, in, out).handle();
+                }else {
+                    System.out.println(response.getMessage());
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

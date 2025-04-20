@@ -18,3 +18,8 @@
     -fx-background-color: transparent;
     -fx-cursor: hand;
 }
+
+.blocked-row {
+    -fx-background-color: #ffdddd;
+    -fx-text-fill: red;
+}

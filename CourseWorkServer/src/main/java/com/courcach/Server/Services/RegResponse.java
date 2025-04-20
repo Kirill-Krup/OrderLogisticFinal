@@ -2,7 +2,7 @@ package com.courcach.Server.Services;
 
 import java.io.Serializable;
 
-public class RegResponse implements Serializable {
+public class RegResponse implements java.io.Serializable {
     private final boolean success;
     private final String role;
     private final String message;

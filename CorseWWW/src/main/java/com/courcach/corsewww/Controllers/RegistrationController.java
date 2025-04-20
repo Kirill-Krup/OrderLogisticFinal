@@ -1,5 +1,8 @@
 package com.courcach.corsewww.Controllers;
 
+import com.courcach.Server.Services.AuthRequest;
+import com.courcach.Server.Services.RegRequest;
+import com.courcach.Server.Services.RegResponse;
 import com.courcach.corsewww.Models.ConnectionToServer;
 import com.courcach.corsewww.Models.Model;
 import javafx.fxml.FXML;
@@ -76,23 +79,17 @@ public class RegistrationController {
                 showError("Пароль не может содержать меньше 8 символов");
                 return;
             }
-            try{
-                ConnectionToServer connection = new ConnectionToServer();
-                connection.connect("localhost", 7777);
-                Boolean isSuccess = connection.register(email,name,surname,login,password);
-                if(isSuccess) {
-                    Stage stage = (Stage) registrationBut.getScene().getWindow();
-                    Model.getInstance().getViewFactory().closeStage(stage);
-                    Model.getInstance().getViewFactory().showClientWindow();
-                }
-                else{
-                    showError("Такой пользователь уже зарегистрирован");
-                }
-            }catch (IOException | ClassNotFoundException ex){
-                showError("Ошибка подключения к серверу");
-                ex.printStackTrace();
+            ConnectionToServer connection = Model.getInstance().getConnectionToServer();
+            connection.sendObject(new RegRequest(email,name,surname,login,password,"REGISTRATION"));
+            RegResponse regResponse = (RegResponse) connection.receiveObject();
+            if(regResponse.isSuccess()) {
+                Stage stage = (Stage) registrationBut.getScene().getWindow();
+                Model.getInstance().getViewFactory().closeStage(stage);
+                Model.getInstance().getViewFactory().showClientWindow();
             }
-
+            else{
+                showError("Такой пользователь уже зарегистрирован");
+            }
         });
     }
 

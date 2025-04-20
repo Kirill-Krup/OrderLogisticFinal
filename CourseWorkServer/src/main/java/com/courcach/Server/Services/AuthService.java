@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class AuthService {
     public AuthResponse authenticate(String username, String password) {
-        String query = "SELECT u.login, u.password, u.salt, u.roleID FROM users u WHERE u.login = ?";
+        String query = "SELECT u.login, u.password, u.salt, u.roleID, u.isBlocked FROM users u WHERE u.login = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -23,17 +23,24 @@ public class AuthService {
                 String storedHash = rs.getString("password");
                 String salt = rs.getString("salt");
                 int roleId = rs.getInt("roleID");
+                Boolean isBlocked = rs.getBoolean("isBlocked");
                 if (PasswordUtil.checkPassword(password, storedHash, salt)) {
-                    String roleQuery = "SELECT r.roleName FROM roles r WHERE r.roleID = ?";
-                    try (PreparedStatement roleStmt = conn.prepareStatement(roleQuery)) {
-                        roleStmt.setInt(1, roleId);
-                        ResultSet roleRs = roleStmt.executeQuery();
+                    if(!isBlocked){
+                        String roleQuery = "SELECT r.roleName FROM roles r WHERE r.roleID = ?";
+                        try (PreparedStatement roleStmt = conn.prepareStatement(roleQuery)) {
+                            roleStmt.setInt(1, roleId);
+                            ResultSet roleRs = roleStmt.executeQuery();
 
-                        if (roleRs.next()) {
-                            String roleName = roleRs.getString("roleName");
-                            return new AuthResponse(true, roleName, "Аутентификация успешна");
+                            if (roleRs.next()) {
+                                String roleName = roleRs.getString("roleName");
+                                return new AuthResponse(true, roleName, "Аутентификация успешна");
+                            }
                         }
                     }
+                    else{
+                        return new AuthResponse(false, null, "Ваш аккаунт был заблокирован");
+                    }
+
                 }
             }
             return new AuthResponse(false, null, "Неверно введены данные");
@@ -44,7 +51,7 @@ public class AuthService {
     }
 
     public RegResponse register(String email, String name, String surname, String login, String password) {
-        String regQuery = "INSERT INTO users (login, password, firstName, lastName, roleID, email, salt) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String regQuery = "INSERT INTO users (login, password, firstName, lastName, roleID, email, salt, isBlocked) VALUES (?, ?, ?, ?, ?, ?, ?,?)";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(regQuery)){
             String salt = PasswordUtil.generateSalt();
@@ -56,6 +63,7 @@ public class AuthService {
             stmt.setInt(5, 2);
             stmt.setString(6, email);
             stmt.setString(7, salt);
+            stmt.setBoolean(8, false);
             int affectedRows = stmt.executeUpdate();
             if (affectedRows > 0) {
                 return new RegResponse(true, "Регистрация успешна");
