@@ -22,17 +22,17 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="editUsersBut" layoutX="102.0" layoutY="202.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="221.0" styleClass="menuPane" text="Работа с пользователями" textFill="WHITE">
+            <Button fx:id="editUsersBut" layoutX="103.0" layoutY="262.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="221.0" styleClass="menuPane" text="Работа с пользователями" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="databasesBut" layoutX="96.0" layoutY="270.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="232.0" styleClass="menuPane" text="Работа с базами данных" textFill="WHITE">
+            <Button fx:id="placesBut" layoutX="97.0" layoutY="202.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="232.0" styleClass="menuPane" text="Работа с товарами" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="marksBut" layoutX="107.0" layoutY="338.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="209.0" styleClass="menuPane" text="Работа с отзывами" textFill="WHITE">
+            <Button fx:id="marksBut" layoutX="107.0" layoutY="328.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="209.0" styleClass="menuPane" text="Работа с отзывами" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>

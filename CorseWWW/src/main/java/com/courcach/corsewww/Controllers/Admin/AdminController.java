@@ -1,5 +1,6 @@
 package com.courcach.corsewww.Controllers.Admin;
 
+import com.courcach.Server.Services.Admin.AdminRequest;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -9,6 +10,9 @@ public class AdminController {
 
     @FXML
     private Button checkOrdersBut;
+
+    @FXML
+    private Button placesBut;
 
     @FXML
     private Button editUsersBut;
@@ -26,6 +30,12 @@ public class AdminController {
             Model.getInstance().getViewFactory().showOrdersForAdminWindow();
         });
 
+        placesBut.setOnAction((event) -> {
+           Stage stage = (Stage) placesBut.getScene().getWindow();
+            Model.getInstance().getViewFactory().showEditMaterialWindow();
+           Model.getInstance().getViewFactory().closeStage(stage);
+        });
+
         editUsersBut.setOnAction((event) -> {
             Stage stage = (Stage) editUsersBut.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(stage);
@@ -39,6 +49,7 @@ public class AdminController {
         });
 
         exitBut.setOnAction((event) -> {
+            Model.getInstance().getConnectionToServer().sendObject(new AdminRequest("exit"));
             Stage stage = (Stage) exitBut.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(stage);
             Model.getInstance().getViewFactory().showLoginWindow();

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<DialogPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.courcach.corsewww.Controllers.Admin.EditPlaceDialogPaneController"
+            stylesheets="@../../Styles/RegistrationDialogPane.css" prefHeight="800.0">
+
+   <content>
+      <VBox alignment="TOP_CENTER" spacing="20" styleClass="edit-container" prefHeight="800.0">
+         <Label text="Редактирование продукта">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Label>
+
+         <GridPane alignment="CENTER" hgap="15" vgap="15">
+            <columnConstraints>
+               <ColumnConstraints halignment="RIGHT" minWidth="150" />
+               <ColumnConstraints halignment="LEFT" minWidth="200" />
+               <ColumnConstraints halignment="LEFT" minWidth="200" />
+            </columnConstraints>
+
+            <Label styleClass="column-header" text="Поле" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <Label styleClass="column-header" text="Текущее значение" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <Label styleClass="column-header" text="Новое значение" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+
+            <Label styleClass="field-label" text="Название:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <Label fx:id="currentNameLabel" prefWidth="200.0" styleClass="current-value" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="nameField" styleClass="edit-field" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+
+            <Label styleClass="field-label" text="Категория:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <Label fx:id="currentCategoryLabel" prefWidth="200.0" styleClass="current-value" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="categoryCombo" styleClass="edit-combo" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+
+            <Label styleClass="field-label" text="Цена продажи:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <Label fx:id="currentPriceLabel" prefWidth="200.0" styleClass="current-value" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="priceField" styleClass="edit-field" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+
+            <Label styleClass="field-label" text="Количество:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+            <Label fx:id="currentQuantityLabel" prefHeight="34.0" prefWidth="200.0" styleClass="current-value" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="quantityField" styleClass="edit-field" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+
+            <Label styleClass="field-label" text="Описание:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+            <Label fx:id="currentDescriptionLabel" prefHeight="98.0" prefWidth="200.0" styleClass="current-value" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextArea fx:id="descriptionArea" styleClass="edit-textarea" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+
+            <rowConstraints>
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+            </rowConstraints>
+         </GridPane>
+
+         <Label alignment="CENTER" styleClass="hint-label" text="Примечание: Оставьте поле пустым, если не хотите изменять текущее значение" />
+         <HBox alignment="CENTER" spacing="20">
+            <Button fx:id="cancelButton" styleClass="cancel-button" text="Отменить" />
+            <Button fx:id="saveButton" styleClass="action-button" text="Сохранить изменения" />
+         </HBox>
+      </VBox>
+   </content>
+</DialogPane>

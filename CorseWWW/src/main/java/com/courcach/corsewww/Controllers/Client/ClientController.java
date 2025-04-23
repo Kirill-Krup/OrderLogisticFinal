@@ -43,6 +43,12 @@ public class ClientController {
     @FXML
     private Text homeText;
 
+    @FXML
+    private Button openWallet;
+
+    @FXML
+    private Button checkMyOrder;
+
     public void initialize() {
         menuBox.setMouseTransparent(true);
         menuBut.setOnAction(e -> {
@@ -60,6 +66,18 @@ public class ClientController {
             Stage stage = (Stage) addNewOrder.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(stage);
             Model.getInstance().getViewFactory().showAddNewOrderWindow();
+        });
+
+        checkMyOrder.setOnAction(event->{
+            Stage stage = (Stage) checkMyOrder.getScene().getWindow();
+            Model.getInstance().getViewFactory().closeStage(stage);
+            Model.getInstance().getViewFactory().showCheckMyOrderWindow();
+        });
+
+        openWallet.setOnAction(e -> {
+            Stage stage = (Stage) openWallet.getScene().getWindow();
+            Model.getInstance().getViewFactory().closeStage(stage);
+            Model.getInstance().getViewFactory().showWalletWindow();
         });
 
         backBut.setOnAction(e -> {

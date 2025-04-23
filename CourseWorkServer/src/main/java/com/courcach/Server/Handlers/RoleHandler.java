@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public abstract class RoleHandler {
+    protected boolean exit;
     protected Socket userSocket;
     protected ObjectInputStream in;
     protected ObjectOutputStream out;

@@ -27,6 +27,9 @@ public class DatabaseConnection {
 
 
 
+
+
+
     // тест бд
     private static void initializeDatabase(Connection conn) throws SQLException {
        //createDefaultAdminIfNotExists(conn);

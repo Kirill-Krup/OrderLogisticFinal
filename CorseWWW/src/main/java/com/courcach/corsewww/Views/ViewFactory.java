@@ -4,11 +4,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+
 public class ViewFactory {
 
     // SignIn SignUp Windows
     public  void showLoginWindow() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/login.fxml"));
         createStage(fxmlLoader);
     }
 
@@ -26,6 +27,11 @@ public class ViewFactory {
 
     public  void showOrdersForAdminWindow() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Admin/CheckOrders.fxml"));
+        createStage(fxmlLoader);
+    }
+
+    public  void showEditMaterialWindow() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Admin/EditPlaces.fxml"));
         createStage(fxmlLoader);
     }
 
@@ -51,6 +57,11 @@ public class ViewFactory {
         createStage(fxmlLoader);
     }
 
+    public  void showWalletWindow() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Client/ReplenishmentOfWallet.fxml"));
+        createStage(fxmlLoader);
+    }
+
     public  void showCheckUserHistoryWindow() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Client/CheckUserHistory.fxml"));
         createStage(fxmlLoader);
@@ -60,7 +71,6 @@ public class ViewFactory {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Client/CheckMyOrder.fxml"));
         createStage(fxmlLoader);
     }
-
 
 
     // Employee section

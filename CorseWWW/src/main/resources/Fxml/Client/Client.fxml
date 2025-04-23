@@ -99,6 +99,11 @@
                <font>
                   <Font size="15.0" />
                </font></Button>
+            <Button fx:id="openWallet" mnemonicParsing="false" prefHeight="38.0" prefWidth="176.0" styleClass="menu" text="Пополнить кошелёк">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
             <Button fx:id="backBut" mnemonicParsing="false" text="Назад">
                <font>
                   <Font size="15.0" />

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<DialogPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.Admin.AddNewMaterialDialogController">
+
+   <content>
+      <AnchorPane prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <ImageView fitHeight="402.0" fitWidth="605.0" layoutX="-1.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../Images/backClient.jpg" />
+               </image>
+            </ImageView>
+            <Pane layoutX="52.0" layoutY="27.0" prefHeight="349.0" prefWidth="504.0" styleClass="mainPane">
+               <children>
+                  <Text fill="WHITE" layoutX="158.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Добавление нового товара">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="addPlaceBut" layoutX="302.0" layoutY="300.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" styleClass="mainPane" text="Добавить товар" />
+                  <Button fx:id="exitBut" layoutX="47.0" layoutY="300.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" styleClass="mainPane" text="Выйти" />
+                  <Button fx:id="delAllBut" layoutX="173.0" layoutY="300.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" styleClass="mainPane" text="Очистить" />
+                  <TextField fx:id="placeName" layoutX="176.0" layoutY="81.0" prefHeight="25.0" prefWidth="163.0" promptText="Введите название товара" />
+                  <TextField fx:id="priceField" layoutX="173.0" layoutY="175.0" prefHeight="25.0" prefWidth="172.0" promptText="Введите цену" />
+                  <TextField fx:id="quantityField" layoutX="143.0" layoutY="250.0" prefHeight="25.0" prefWidth="231.0" promptText="Введите количество товара на складе" />
+                  <TextArea fx:id="descriptionArea" layoutX="176.0" layoutY="116.0" prefHeight="47.0" prefWidth="163.0" promptText="Введите описание товара" />
+                  <ComboBox fx:id="categoryBox" layoutX="156.0" layoutY="214.0" prefHeight="25.0" prefWidth="214.0" promptText="Выберите категорию товара" />
+                  <Text fx:id="errorLabel" fill="WHITE" layoutX="45.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="426.13671875" />
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </content>
+</DialogPane>

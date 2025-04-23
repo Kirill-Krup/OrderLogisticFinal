@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import java.io.IOException;
 
 public class LoginController {
     @FXML
@@ -26,6 +25,8 @@ public class LoginController {
 
     @FXML
     private TextField passwordInput;
+
+
 
     public void initialize() {
         signUpBut.setOnAction(e -> {
@@ -70,5 +71,5 @@ public class LoginController {
     private void showError(String error) {
         errorLabel.setVisible(true);
         errorLabel.setText(error);
-    }
+      }
 }

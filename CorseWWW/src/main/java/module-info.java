@@ -4,6 +4,7 @@ module com.courcach.corsewww {
     requires java.desktop;
     requires jdk.jdi;
     requires CourseWorkServer;
+    requires java.sql;
 
     opens com.courcach.corsewww to javafx.fxml;
     opens com.courcach.corsewww.Controllers to javafx.fxml;
