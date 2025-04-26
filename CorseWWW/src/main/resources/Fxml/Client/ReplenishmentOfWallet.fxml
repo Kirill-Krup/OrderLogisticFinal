@@ -1,32 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="468.0" prefWidth="535.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.Client.ReplenishmnetOfWalletController">
+<AnchorPane prefHeight="468.0" prefWidth="535.0" stylesheets="@../../Styles/Client.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.Client.ReplenishmnetOfWalletController">
    <children>
-      <ImageView fitHeight="478.0" fitWidth="535.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" />
-      <Text layoutX="158.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пополнение кошелька" wrappingWidth="218.63592529296875">
+      <ImageView fitHeight="816.0" fitWidth="1021.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" />
+      <Text layoutX="393.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пополнение кошелька" wrappingWidth="218.63592529296875">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
-      <TextField fx:id="cardNumber" layoutX="48.0" layoutY="107.0" promptText="**** **** **** ****" />
-      <TextField fx:id="validityPeriod" layoutX="48.0" layoutY="239.0" promptText="01//25" />
-      <TextField fx:id="cvvCode" layoutX="48.0" layoutY="304.0" promptText="***" />
-      <Text layoutX="48.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите номер карты" />
-      <Text layoutX="48.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите держателя карты" />
-      <Text layoutX="48.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите cvv код" />
-      <Text layoutX="48.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите срок действия карты" />
-      <TextField fx:id="cardUser" layoutX="48.0" layoutY="174.0" promptText="IVANOV IVAN" />
-      <Button fx:id="exitBut" layoutX="133.0" layoutY="416.0" mnemonicParsing="false" text="Выйти" />
-      <Button fx:id="ReplenishmnetOfWalletBut" layoutX="283.0" layoutY="416.0" mnemonicParsing="false" text="Пополнить кошелёк" />
-      <Text fx:id="errorLabel" fill="RED" layoutX="283.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="212.0" />
-      <Text layoutX="52.0" layoutY="352.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Размер пополнения" />
-      <TextField fx:id="sum" layoutX="48.0" layoutY="364.0" prefHeight="26.0" prefWidth="173.0" promptText="Введите сумму пополнения" />
+      <TextField fx:id="cardNumber" layoutX="432.0" layoutY="277.0" promptText="**** **** **** ****" />
+      <TextField fx:id="validityPeriod" layoutX="432.0" layoutY="409.0" promptText="01//25" />
+      <TextField fx:id="cvvCode" layoutX="432.0" layoutY="474.0" promptText="***" />
+      <Text layoutX="432.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите номер карты" />
+      <Text layoutX="432.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите держателя карты" />
+      <Text layoutX="432.0" layoutY="461.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите cvv код" />
+      <Text layoutX="432.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите срок действия карты" />
+      <TextField fx:id="cardUser" layoutX="432.0" layoutY="344.0" promptText="IVANOV IVAN" />
+      <Text fx:id="errorLabel" fill="RED" layoutX="633.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="212.0" />
+      <Text layoutX="436.0" layoutY="522.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Размер пополнения" />
+      <TextField fx:id="sum" layoutX="432.0" layoutY="534.0" prefHeight="26.0" prefWidth="173.0" promptText="Введите сумму пополнения" />
+      <Button fx:id="ReplenishmnetOfWalletBut" layoutX="440.0" layoutY="600.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="138.0" style="-fx-background-color: #90a955; -fx-background-radius: 10px; -fx-border-radius: 10px;" text="Пополнить кошелёк" />
+      <Pane fx:id="mainPane" layoutX="301.0" layoutY="57.0" mouseTransparent="true" prefHeight="775.0" prefWidth="719.0" />
+      <HBox fx:id="topPane" alignment="CENTER_LEFT" layoutX="-1.0" layoutY="-2.0" prefHeight="64.0" prefWidth="1028.0" styleClass="topMenu">
+         <children>
+            <Pane prefHeight="64.0" prefWidth="1029.0">
+               <children>
+                  <Button fx:id="menuBut" cancelButton="true" layoutX="21.0" layoutY="11.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="42.0" styleClass="allScreen" text="≡">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="homeText" layoutX="83.0" layoutY="19.0" mnemonicParsing="false" text="Главная" />
+                  <Button fx:id="exitBut" layoutX="912.0" layoutY="19.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" text="Выйти" />
+                  <Button fx:id="cart" layoutX="832.0" layoutY="11.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="61.0" />
+               </children>
+            </Pane>
+         </children>
+      </HBox>
+      <VBox fx:id="menuBox" layoutX="-3.0" opacity="0.0" prefHeight="832.0" prefWidth="306.0" styleClass="menu">
+         <children>
+            <ImageView fitHeight="87.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true" styleClass="menu">
+               <image>
+                  <Image url="@../../Images/logo.png" />
+               </image>
+               <VBox.margin>
+                  <Insets top="230.0" />
+               </VBox.margin>
+            </ImageView>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu" text="LogisticOrder">
+               <VBox.margin>
+                  <Insets bottom="40.0" top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Button fx:id="addNewOrder" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" styleClass="menu" text="Оформить заказ">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="checkUserHistory" mnemonicParsing="false" prefHeight="38.0" prefWidth="176.0" styleClass="menu" text="Посмотреть историю">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="checkMyOrder" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" styleClass="menu" text="Ход выполнения заказа">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="openWallet" mnemonicParsing="false" prefHeight="38.0" prefWidth="176.0" styleClass="menu" text="Пополнить кошелёк">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="backBut" mnemonicParsing="false" text="Назад">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Pane prefHeight="75.0" prefWidth="283.0">
+               <VBox.margin>
+                  <Insets top="200.0" />
+               </VBox.margin>
+               <children>
+                  <Text fill="WHITE" layoutX="7.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ваш баланс: ">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="MyWallet" alignment="CENTER" layoutX="123.0" layoutY="36.0" prefHeight="29.0" prefWidth="73.0" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Text fill="WHITE" layoutX="195.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BYN" wrappingWidth="35.26611328125">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

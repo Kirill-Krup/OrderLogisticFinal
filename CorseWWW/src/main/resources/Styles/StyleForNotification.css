@@ -1,0 +1,30 @@
+.notification-pane {
+    -fx-background-color: rgba(82, 170, 86, 0.87);
+    -fx-border-radius: 0px 0px 20px 20px;
+    -fx-background-radius: 0px 0px 20px 20px;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);
+    -fx-alignment: center;
+}
+
+.notification-label {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.error-notification-pane {
+    -fx-background-color: rgba(223, 23, 38, 0.87);
+    -fx-border-radius: 0px 0px 20px 20px;
+    -fx-background-radius: 0px 0px 20px 20px;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);
+    -fx-alignment: center;
+    
+}
+
+.error-notification-label {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}

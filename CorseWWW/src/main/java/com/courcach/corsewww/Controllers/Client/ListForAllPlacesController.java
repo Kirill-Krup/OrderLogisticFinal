@@ -47,4 +47,11 @@ public class ListForAllPlacesController {
     public void setItemPane(AnchorPane itemPane) {this.itemPane = itemPane;}
 
     public void setThr(Runnable thr) {this.thr = thr;}
+
+    public void disableAddButton() {
+        addButton.setDisable(true);
+        addButton.setStyle("-fx-background-color: grey");
+    }
+
+
 }

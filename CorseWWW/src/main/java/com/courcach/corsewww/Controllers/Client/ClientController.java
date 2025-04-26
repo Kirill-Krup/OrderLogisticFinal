@@ -4,6 +4,7 @@ package com.courcach.corsewww.Controllers.Client;
 import com.courcach.corsewww.Models.Model;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -49,8 +50,12 @@ public class ClientController {
     @FXML
     private Button checkMyOrder;
 
+    @FXML
+    private Label MyWallet;
+
     public void initialize() {
         menuBox.setMouseTransparent(true);
+        MyWallet.setText(String.valueOf(Model.getInstance().getCurrentUser().getWallet()));
         menuBut.setOnAction(e -> {
            menuBox.setOpacity(1);
            topPane.setStyle("-fx-background-color: rgba(0,0,0,0.8)");

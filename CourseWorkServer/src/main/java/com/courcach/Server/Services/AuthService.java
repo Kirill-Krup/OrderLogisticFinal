@@ -2,6 +2,7 @@ package com.courcach.Server.Services;
 
 
 import com.courcach.Database.DatabaseConnection;
+import com.courcach.Server.Services.ClassesForRequests.Users;
 import com.courcach.Server.Utils.PasswordUtil;
 
 import java.sql.Connection;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 
 public class AuthService {
     public AuthResponse authenticate(String username, String password) {
-        String query = "SELECT u.login, u.password, u.salt, u.roleID, u.isBlocked FROM users u WHERE u.login = ?";
+        String query = "SELECT u.login, u.password, u.firstName,u.lastName, u.email, u.salt, u.roleID, u.isBlocked,u.wallet,u.photoPath FROM users u WHERE u.login = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -33,20 +34,27 @@ public class AuthService {
 
                             if (roleRs.next()) {
                                 String roleName = roleRs.getString("roleName");
-                                return new AuthResponse(true, roleName, "Аутентификация успешна");
+                                Users user = new Users();
+                                user.setLogin(username);
+                                user.setFirstName(rs.getString("firstName"));
+                                user.setLastName(rs.getString("lastName"));
+                                user.setEmail(rs.getString("email"));
+                                user.setWallet(rs.getDouble("wallet"));
+                                user.setPhotoPath(rs.getString("photoPath"));
+                                return new AuthResponse(true, roleName, "Аутентификация успешна",user);
                             }
                         }
                     }
                     else{
-                        return new AuthResponse(false, null, "Ваш аккаунт был заблокирован");
+                        return new AuthResponse(false, null, "Ваш аккаунт был заблокирован",null);
                     }
 
                 }
             }
-            return new AuthResponse(false, null, "Неверно введены данные");
+            return new AuthResponse(false, null, "Неверно введены данные",null);
         } catch (SQLException e) {
             e.printStackTrace();
-            return new AuthResponse(false, null, "Ошибка БД");
+            return new AuthResponse(false, null, "Ошибка БД",null);
         }
     }
 

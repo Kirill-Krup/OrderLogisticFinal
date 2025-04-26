@@ -28,11 +28,13 @@ public class ClientHandler extends RoleHandler {
                         out.flush();
                     }
                     case "addNewOrder"->{
-
+                        orderResponse.newOrder(request.getOrder());
                     }
 
                     case "replenishmentWallet"->{
-
+                        double newWalletValue = request.getSum()+request.getUser().getWallet();
+                        System.out.println(newWalletValue+ " "+ request.getUser().getLogin());
+                        orderResponse.updateWallet(request.getUser().getLogin(),newWalletValue);
                     }
 
                     case "exit"->{

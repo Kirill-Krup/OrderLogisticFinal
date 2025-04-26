@@ -12,18 +12,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.Client.AddNewOrderController">
+<AnchorPane prefHeight="750.0" prefWidth="1015.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.Client.AddNewOrderController">
    <children>
-      <ImageView fitHeight="810.0" fitWidth="1015.0" pickOnBounds="true">
+      <ImageView fitHeight="821.0" fitWidth="1015.0" pickOnBounds="true">
          <image>
             <Image url="@../../Images/backForClient.jpg" />
          </image>
       </ImageView>
-      <Pane layoutX="98.0" layoutY="88.0" prefHeight="705.0" prefWidth="862.0" styleClass="mainPane">
+      <Pane layoutX="112.0" layoutY="88.0" prefHeight="705.0" prefWidth="846.0" styleClass="mainPane">
          <children>
             <Text layoutX="278.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Создание новой заявки" wrappingWidth="189.330078125">
                <font>
@@ -40,30 +41,15 @@
 
 
             <TextField fx:id="adressTextField" layoutX="56.0" layoutY="237.0" mouseTransparent="true" opacity="0.0" prefHeight="29.0" prefWidth="243.0" promptText="Введите адрес доставки" styleClass="containersForInput" />
-            <Text layoutX="59.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Выберите материалы">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
             <ListView fx:id="listOfPlaces" layoutX="56.0" layoutY="306.0" prefHeight="296.0" prefWidth="653.0" />
-            <Button fx:id="deleteBut" layoutX="56.0" layoutY="638.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="110.0" styleClass="mainPane" text="Очистить">
+            <Button fx:id="deleteBut" layoutX="56.0" layoutY="628.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="142.0" styleClass="mainPane" text="Очистить">
                <font>
                   <Font size="13.0" />
                </font></Button>
-            <Button fx:id="formOrder" layoutX="552.0" layoutY="638.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="162.0" styleClass="mainPane" text="Оформить заказ">
+            <Button fx:id="formOrder" layoutX="552.0" layoutY="628.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="176.0" styleClass="mainPane" text="Оформить заказ">
                <font>
                   <Font size="13.0" />
                </font></Button>
-            <Text layoutX="308.0" layoutY="633.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Цена: ">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Text>
-            <Text layoutX="356.0" layoutY="632.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="102.0">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Text>
             <ComboBox fx:id="selectAdress" layoutX="56.0" layoutY="237.0" mouseTransparent="true" opacity="0.0" prefHeight="29.0" prefWidth="243.0" promptText="Выберите пункт выдачи" styleClass="containersForInput" />
             <Text fx:id="redStar" fill="#ff0101" layoutX="302.0" layoutY="212.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="7.88885498046875">
                <font>
@@ -85,14 +71,41 @@
                   <Font size="17.0" />
                </font>
             </Text>
-            <Text fx:id="errorLabel" fill="RED" layoutX="216.0" layoutY="669.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="308.5367431640625" />
             <ComboBox fx:id="typeOfPaintment" layoutX="56.0" layoutY="145.0" prefHeight="29.0" prefWidth="243.0" promptText="Выберите тип оплаты" styleClass="containersForInput" />
             <Text fx:id="redStar121" fill="#ff0101" layoutX="306.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="7.88885498046875">
                <font>
                   <Font size="17.0" />
                </font>
             </Text>
-            <Pane fx:id="mainPane" layoutX="104.0" layoutY="-29.0" mouseTransparent="true" prefHeight="751.0" prefWidth="813.0" style="-fx-background-color: transparent;" styleClass="mainPane" />
+            <Pane fx:id="mainPane" layoutX="185.0" layoutY="-29.0" mouseTransparent="true" prefHeight="763.0" prefWidth="719.0" style="-fx-background-color: transparent;" styleClass="mainPane">
+               <children>
+                  <Text layoutX="36.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Описание">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Text layoutX="90.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Название">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="544.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="349.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Категория">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="471.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Цена">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Text>
          </children>
       </Pane>
       <HBox fx:id="topPane" alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="1015.0" styleClass="topMenu">
@@ -120,20 +133,34 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
+                  <Label fx:id="labelForResultSum" alignment="CENTER_RIGHT" layoutX="711.0" layoutY="11.0" prefHeight="39.0" prefWidth="73.0" text="0" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="BYNText" layoutX="797.0" layoutY="20.0" text="BYN" textFill="WHITE">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </children>
       </HBox>
-      <VBox fx:id="menuBox" layoutX="-1.0" opacity="0.0" prefHeight="810.0" prefWidth="284.0" styleClass="menu">
+      <StackPane fx:id="notificationPane" layoutX="311.0" prefHeight="46.0" prefWidth="352.0" stylesheets="@../../Styles/StyleForNotification.css" />
+      <VBox fx:id="menuBox" layoutX="-1.0" opacity="0.0" prefHeight="821.0" prefWidth="299.0" styleClass="menu">
          <children>
             <ImageView fitHeight="87.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true" styleClass="menu">
                <image>
                   <Image url="@../../Images/logo.png" />
                </image>
+               <VBox.margin>
+                  <Insets top="230.0" />
+               </VBox.margin>
             </ImageView>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu" text="LogisticOrder">
                <VBox.margin>
-                  <Insets bottom="40.0" />
+                  <Insets bottom="40.0" top="10.0" />
                </VBox.margin>
                <font>
                   <Font size="20.0" />
@@ -164,8 +191,32 @@
                   <Font size="15.0" />
                </font>
             </Button>
+            <Pane prefHeight="75.0" prefWidth="283.0">
+               <VBox.margin>
+                  <Insets top="200.0" />
+               </VBox.margin>
+               <children>
+                  <Text fill="WHITE" layoutX="8.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ваш баланс: ">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="MyWallet" alignment="CENTER" layoutX="124.0" layoutY="23.0" prefHeight="29.0" prefWidth="73.0" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Text fill="WHITE" layoutX="196.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BYN" wrappingWidth="35.26611328125">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
          </children>
       </VBox>
+      <ListView fx:id="cartList" layoutX="576.0" layoutY="60.0" mouseTransparent="true" prefHeight="760.0" prefWidth="438.0" style="-fx-background-color: transparent;" />
+      <Pane fx:id="paneForBlackCart" layoutX="-1.0" layoutY="-1.0" mouseTransparent="true" prefHeight="822.0" prefWidth="579.0" />
    </children>
    <stylesheets>
       <URL value="@../../Styles/AddNewOrder.css" />

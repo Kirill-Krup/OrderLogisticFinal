@@ -23,13 +23,13 @@
 }
 
 .menu {
-    -fx-background-color: rgba(97, 9, 133, 0.91);
+    -fx-background-color: rgba(42, 64, 108, 0.9);
     -fx-alignment: center;
 
 }
 
 .menu Button{
-    -fx-text-fill: black;
+    -fx-text-fill: white;
     -fx-background-color: transparent;
     -fx-cursor: hand;
 }

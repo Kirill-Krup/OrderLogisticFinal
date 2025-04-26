@@ -7,10 +7,7 @@ import com.courcach.corsewww.Models.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -52,6 +49,9 @@ public class CheckMyOrderController {
     @FXML
     private Button openWallet;
 
+    @FXML
+    private Label MyWallet;
+
     public void initialize() {
         initial();
     }
@@ -59,6 +59,7 @@ public class CheckMyOrderController {
 
     private void initial(){
         menuBox.setMouseTransparent(true);
+        MyWallet.setText(String.valueOf(Model.getInstance().getCurrentUser().getWallet()));
         menuBut.setOnAction(e -> {
             menuBox.setOpacity(1);
             topPane.setStyle("-fx-background-color: rgba(0,0,0,0.8)");

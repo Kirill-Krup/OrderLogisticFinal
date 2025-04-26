@@ -2,6 +2,7 @@ package com.courcach.corsewww.Controllers;
 
 import com.courcach.Server.Services.AuthRequest;
 import com.courcach.Server.Services.AuthResponse;
+import com.courcach.Server.Services.ClassesForRequests.Users;
 import com.courcach.corsewww.Models.ConnectionToServer;
 import com.courcach.corsewww.Models.Model;
 import javafx.fxml.FXML;
@@ -53,6 +54,7 @@ public class LoginController {
                 showError("Неверно введён логин или пароль");
                 return;
             }
+            Model.getInstance().setCurrentUser(new Users(response.getUser().getLogin(),response.getUser().getFirstName(),response.getUser().getLastName(),response.getUser().getEmail(),response.getUser().getWallet(),response.getUser().getPhotoPath()));
             Stage stage = (Stage) enterBut.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(stage);
             switch (response.getRole()){

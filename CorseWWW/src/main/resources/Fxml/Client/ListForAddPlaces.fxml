@@ -5,25 +5,24 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="50.0" prefWidth="634.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.Client.ListForAllPlacesController">
    <children>
-      <Label fx:id="labelForName" layoutX="6.0" layoutY="14.0" prefHeight="21.0" prefWidth="119.0">
+      <Label fx:id="labelForName" alignment="CENTER" layoutX="6.0" layoutY="14.0" prefHeight="21.0" prefWidth="119.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="labelForDescription" layoutX="135.0" layoutY="14.0" prefHeight="21.0" prefWidth="119.0">
+      <Label fx:id="labelForDescription" alignment="CENTER" layoutX="135.0" layoutY="14.0" prefHeight="21.0" prefWidth="119.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="labelForCategory" layoutX="268.0" layoutY="14.0" prefHeight="21.0" prefWidth="119.0">
+      <Label fx:id="labelForCategory" alignment="CENTER" layoutX="263.0" layoutY="14.0" prefHeight="21.0" prefWidth="119.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="labelForPrice" layoutX="393.0" layoutY="14.0" prefHeight="21.0" prefWidth="119.0">
+      <Label fx:id="labelForPrice" alignment="CENTER" layoutX="393.0" layoutY="14.0" prefHeight="21.0" prefWidth="119.0">
          <font>
             <Font size="15.0" />
          </font>

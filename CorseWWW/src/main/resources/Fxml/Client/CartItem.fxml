@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="82.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.Client.CartItemController">
+   <children>
+      <Label layoutX="7.0" layoutY="6.0" prefHeight="17.0" prefWidth="87.0" text="Наименование" />
+      <Label fx:id="nameCartField" alignment="CENTER" layoutX="10.0" layoutY="29.0" prefHeight="44.0" prefWidth="84.0" />
+      <Label layoutX="208.0" layoutY="6.0" text="Цена" />
+      <Label fx:id="descriptionCartField" alignment="CENTER" layoutX="105.0" layoutY="31.0" prefHeight="42.0" prefWidth="76.0" />
+      <Label layoutX="114.0" layoutY="6.0" text="Описание" />
+      <Label fx:id="priceCartField" alignment="CENTER" layoutX="196.0" layoutY="29.0" prefHeight="40.0" prefWidth="58.0" />
+      <Button fx:id="delOneQuantityBut" layoutX="356.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: #e63946;" text="-" />
+      <Button fx:id="deletePlaceFromCartBut" layoutX="375.0" layoutY="44.0" mnemonicParsing="false" style="-fx-background-color: #c1121f;" text="X" />
+      <Button fx:id="addPlaceBut" layoutX="391.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: #a7c957;" text="+" />
+      <Label fx:id="quantityCartField" alignment="CENTER" layoutX="261.0" layoutY="27.0" prefHeight="50.0" prefWidth="80.0" />
+      <Label layoutX="269.0" layoutY="5.0" text="Количество" />
+   </children>
+</AnchorPane>
