@@ -148,17 +148,17 @@
          </children>
       </HBox>
       <StackPane fx:id="notificationPane" layoutX="311.0" prefHeight="46.0" prefWidth="352.0" stylesheets="@../../Styles/StyleForNotification.css" />
-      <VBox fx:id="menuBox" layoutX="-1.0" opacity="0.0" prefHeight="821.0" prefWidth="299.0" styleClass="menu">
+      <VBox fx:id="menuBox" layoutX="-3.0" layoutY="-1.0" opacity="0.0" prefHeight="822.0" prefWidth="312.0" styleClass="menu">
          <children>
             <ImageView fitHeight="87.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true" styleClass="menu">
                <image>
                   <Image url="@../../Images/logo.png" />
                </image>
                <VBox.margin>
-                  <Insets top="230.0" />
+                  <Insets top="210.0" />
                </VBox.margin>
             </ImageView>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu" text="LogisticOrder">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu" text="LogisticOrder">
                <VBox.margin>
                   <Insets bottom="40.0" top="10.0" />
                </VBox.margin>
@@ -186,27 +186,32 @@
                   <Font size="15.0" />
                </font>
             </Button>
+            <Button fx:id="reportsBut" mnemonicParsing="false" styleClass="menu" text="Отзывы">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
             <Button fx:id="backBut" mnemonicParsing="false" text="Назад">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Pane prefHeight="75.0" prefWidth="283.0">
+            <Pane prefHeight="75.0" prefWidth="283.0" style="-fx-background-color: transparent;">
                <VBox.margin>
                   <Insets top="200.0" />
                </VBox.margin>
                <children>
-                  <Text fill="WHITE" layoutX="8.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ваш баланс: ">
+                  <Text fill="WHITE" layoutX="8.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ваш баланс: ">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Text>
-                  <Label fx:id="MyWallet" alignment="CENTER" layoutX="124.0" layoutY="23.0" prefHeight="29.0" prefWidth="73.0" textFill="WHITE">
+                  <Label fx:id="MyWallet" alignment="CENTER" layoutX="124.0" layoutY="7.0" prefHeight="29.0" prefWidth="73.0" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Text fill="WHITE" layoutX="196.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BYN" wrappingWidth="35.26611328125">
+                  <Text fill="WHITE" layoutX="232.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BYN" wrappingWidth="35.26611328125">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -216,7 +221,7 @@
          </children>
       </VBox>
       <ListView fx:id="cartList" layoutX="576.0" layoutY="60.0" mouseTransparent="true" prefHeight="760.0" prefWidth="438.0" style="-fx-background-color: transparent;" />
-      <Pane fx:id="paneForBlackCart" layoutX="-1.0" layoutY="-1.0" mouseTransparent="true" prefHeight="822.0" prefWidth="579.0" />
+      <Pane fx:id="paneForBlackCart" layoutY="-1.0" mouseTransparent="true" prefHeight="822.0" prefWidth="578.0" />
    </children>
    <stylesheets>
       <URL value="@../../Styles/AddNewOrder.css" />

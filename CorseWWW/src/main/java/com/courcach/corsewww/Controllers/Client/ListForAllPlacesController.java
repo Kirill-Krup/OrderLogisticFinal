@@ -52,6 +52,4 @@ public class ListForAllPlacesController {
         addButton.setDisable(true);
         addButton.setStyle("-fx-background-color: grey");
     }
-
-
 }

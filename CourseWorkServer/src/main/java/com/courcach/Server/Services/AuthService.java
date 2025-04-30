@@ -5,14 +5,13 @@ import com.courcach.Database.DatabaseConnection;
 import com.courcach.Server.Services.ClassesForRequests.Users;
 import com.courcach.Server.Utils.PasswordUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class AuthService {
     public AuthResponse authenticate(String username, String password) {
-        String query = "SELECT u.login, u.password, u.firstName,u.lastName, u.email, u.salt, u.roleID, u.isBlocked,u.wallet,u.photoPath FROM users u WHERE u.login = ?";
+        String query = "SELECT u.login, u.password, u.firstName, u.lastName, u.email, " +
+                "u.salt, u.roleID, u.isBlocked, u.wallet, u.lastLogin " +
+                "FROM users u WHERE u.login = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -24,44 +23,67 @@ public class AuthService {
                 String storedHash = rs.getString("password");
                 String salt = rs.getString("salt");
                 int roleId = rs.getInt("roleID");
-                Boolean isBlocked = rs.getBoolean("isBlocked");
+                boolean isBlocked = rs.getBoolean("isBlocked");
+
                 if (PasswordUtil.checkPassword(password, storedHash, salt)) {
-                    if(!isBlocked){
-                        String roleQuery = "SELECT r.roleName FROM roles r WHERE r.roleID = ?";
-                        try (PreparedStatement roleStmt = conn.prepareStatement(roleQuery)) {
-                            roleStmt.setInt(1, roleId);
-                            ResultSet roleRs = roleStmt.executeQuery();
+                    if (!isBlocked) {
+                        updateLastLogin(conn, username);
 
-                            if (roleRs.next()) {
-                                String roleName = roleRs.getString("roleName");
-                                Users user = new Users();
-                                user.setLogin(username);
-                                user.setFirstName(rs.getString("firstName"));
-                                user.setLastName(rs.getString("lastName"));
-                                user.setEmail(rs.getString("email"));
-                                user.setWallet(rs.getDouble("wallet"));
-                                user.setPhotoPath(rs.getString("photoPath"));
-                                return new AuthResponse(true, roleName, "Аутентификация успешна",user);
-                            }
+                        String roleName = getRoleName(conn, roleId);
+                        if (roleName != null) {
+                            Users user = new Users();
+                            user.setLogin(username);
+                            user.setFirstName(rs.getString("firstName"));
+                            user.setLastName(rs.getString("lastName"));
+                            user.setEmail(rs.getString("email"));
+                            user.setWallet(rs.getDouble("wallet"));
+                            user.setLastLogin(rs.getTimestamp("lastLogin"));
+
+                            return new AuthResponse(true, roleName, "Аутентификация успешна", user);
                         }
+                    } else {
+                        return new AuthResponse(false, null, "Ваш аккаунт был заблокирован", null);
                     }
-                    else{
-                        return new AuthResponse(false, null, "Ваш аккаунт был заблокирован",null);
-                    }
-
                 }
             }
-            return new AuthResponse(false, null, "Неверно введены данные",null);
+            return new AuthResponse(false, null, "Неверно введены данные", null);
         } catch (SQLException e) {
             e.printStackTrace();
-            return new AuthResponse(false, null, "Ошибка БД",null);
+            return new AuthResponse(false, null, "Ошибка БД", null);
+        }
+    }
+
+    private void updateLastLogin(Connection conn, String username) throws SQLException {
+        String updateQuery = "UPDATE users SET lastLogin = CURRENT_TIMESTAMP WHERE login = ?";
+        try (PreparedStatement updateStmt = conn.prepareStatement(updateQuery)) {
+            updateStmt.setString(1, username);
+            updateStmt.executeUpdate();
+        }
+    }
+
+    private String getRoleName(Connection conn, int roleId) throws SQLException {
+        String roleQuery = "SELECT r.roleName FROM roles r WHERE r.roleID = ?";
+        try (PreparedStatement roleStmt = conn.prepareStatement(roleQuery)) {
+            roleStmt.setInt(1, roleId);
+            ResultSet roleRs = roleStmt.executeQuery();
+            return roleRs.next() ? roleRs.getString("roleName") : null;
         }
     }
 
     public RegResponse register(String email, String name, String surname, String login, String password) {
-        String regQuery = "INSERT INTO users (login, password, firstName, lastName, roleID, email, salt, isBlocked) VALUES (?, ?, ?, ?, ?, ?, ?,?)";
+        try {
+            if (userExists(login, email)) {
+                return new RegResponse(false, "Пользователь с таким логином или email уже существует");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        String regQuery = "INSERT INTO users (login, password, firstName, lastName, roleID, email, salt, isBlocked, wallet, lastLogin) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(regQuery)){
+             PreparedStatement stmt = conn.prepareStatement(regQuery, Statement.RETURN_GENERATED_KEYS)) {
+
             String salt = PasswordUtil.generateSalt();
             String hashPassword = PasswordUtil.hashPassword(password, salt);
             stmt.setString(1, login);
@@ -72,22 +94,47 @@ public class AuthService {
             stmt.setString(6, email);
             stmt.setString(7, salt);
             stmt.setBoolean(8, false);
+            stmt.setDouble(9, 0.0);
+            stmt.setTimestamp(10, new Timestamp(System.currentTimeMillis()));
+
             int affectedRows = stmt.executeUpdate();
+
             if (affectedRows > 0) {
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        return new RegResponse(true, "Регистрация успешна");
+                    }
+                }
                 return new RegResponse(true, "Регистрация успешна");
             } else {
                 return new RegResponse(false, "Не удалось зарегистрировать пользователя");
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-            if (e.getMessage().contains("Duplicate entry")) {
-                if (e.getMessage().contains("login")) {
-                    return new RegResponse(false, "Логин уже занят");
-                } else if (e.getMessage().contains("email")) {
-                    return new RegResponse(false, "Email уже используется");
-                }
-            }
-            return new RegResponse(false, "Ошибка БД");
+            return handleRegistrationError(e);
         }
+    }
+
+    private boolean userExists(String login, String email) throws SQLException {
+        String checkQuery = "SELECT 1 FROM users WHERE login = ? OR email = ? LIMIT 1";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(checkQuery)) {
+            stmt.setString(1, login);
+            stmt.setString(2, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    private RegResponse handleRegistrationError(SQLException e) {
+        if (e.getMessage().contains("Duplicate entry")) {
+            if (e.getMessage().contains("login")) {
+                return new RegResponse(false, "Логин уже занят");
+            } else if (e.getMessage().contains("email")) {
+                return new RegResponse(false, "Email уже используется");
+            }
+        }
+        return new RegResponse(false, "Ошибка базы данных: " + e.getMessage());
     }
 }

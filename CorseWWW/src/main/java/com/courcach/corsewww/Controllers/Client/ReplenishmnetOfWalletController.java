@@ -3,12 +3,14 @@ package com.courcach.corsewww.Controllers.Client;
 import com.courcach.Server.Services.Client.ClientRequest;
 import com.courcach.corsewww.Models.ConnectionToServer;
 import com.courcach.corsewww.Models.Model;
+import com.courcach.corsewww.Views.NotificationUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -40,9 +42,6 @@ public class ReplenishmnetOfWalletController {
     private TextField cvvCode;
 
     @FXML
-    private Text errorLabel;
-
-    @FXML
     private Button exitBut;
 
     @FXML
@@ -72,13 +71,19 @@ public class ReplenishmnetOfWalletController {
     @FXML
     private Label MyWallet;
 
+    @FXML
+    private StackPane notificationPane;
+
+    @FXML
+    private Button reportsBut;
+
 
     public void initialize() {
         initial();
         ConnectionToServer connection = Model.getInstance().getConnectionToServer();
         ReplenishmnetOfWalletBut.setOnAction(event -> {
            if(cardNumber.getText().trim().isEmpty() || cardUser.getText().trim().isEmpty() || cvvCode.getText().trim().isEmpty() || validityPeriod.getText().trim().isEmpty() || sum.getText().trim().isEmpty()) {
-              errorLabel.setText("Введены не все поля");
+              NotificationUtil.showErrorNotification(notificationPane,"Введены не все поля");
               return;
            }
            String CardNumber = cardNumber.getText();
@@ -88,6 +93,7 @@ public class ReplenishmnetOfWalletController {
            Float Sum = Float.parseFloat(sum.getText());
            connection.sendObject(new ClientRequest("replenishmentWallet",Model.getInstance().getCurrentUser(), Sum));
            Model.getInstance().getCurrentUser().setWallet(Model.getInstance().getCurrentUser().getWallet() + Sum);
+           NotificationUtil.showNotification(notificationPane,"Кошелёк успешно пополнен");
         });
     }
 
@@ -122,10 +128,28 @@ public class ReplenishmnetOfWalletController {
             mainPane.setStyle("-fx-background-color: transparent");
         });
 
+        checkMyOrder.setOnAction(event->{
+            Stage stage = (Stage) checkMyOrder.getScene().getWindow();
+            Model.getInstance().getViewFactory().closeStage(stage);
+            Model.getInstance().getViewFactory().showCheckMyOrderWindow();
+        });
+
+        checkUserHistory.setOnAction(e -> {
+            Stage stage = (Stage) checkUserHistory.getScene().getWindow();
+            Model.getInstance().getViewFactory().closeStage(stage);
+            Model.getInstance().getViewFactory().showCheckUserHistoryWindow();
+        });
+
         homeText.setOnAction(e -> {
             Stage stage = (Stage) homeText.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(stage);
             Model.getInstance().getViewFactory().showClientWindow();
+        });
+
+        reportsBut.setOnAction(e -> {
+            Stage stage = (Stage) reportsBut.getScene().getWindow();
+            Model.getInstance().getViewFactory().closeStage(stage);
+            Model.getInstance().getViewFactory().showReportsWindow();
         });
 
         exitBut.setOnAction(e -> {
@@ -135,5 +159,4 @@ public class ReplenishmnetOfWalletController {
             Model.getInstance().getViewFactory().showLoginWindow();
         });
     }
-
 }

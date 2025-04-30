@@ -4,12 +4,14 @@ import com.courcach.Server.Services.Admin.AdminRequest;
 import com.courcach.Server.Services.ClassesForRequests.Places;
 import com.courcach.corsewww.Models.ConnectionToServer;
 import com.courcach.corsewww.Models.Model;
+import com.courcach.corsewww.Views.NotificationUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -22,9 +24,6 @@ public class EditPlacesController {
 
     @FXML
     private Button addNewPlace;
-
-    @FXML
-    private Text errorLabel;
 
     @FXML
     private Button backFromWindow;
@@ -59,6 +58,9 @@ public class EditPlacesController {
     @FXML
     private TableView<Places> placesTable;
 
+    @FXML
+    private StackPane notificationPane;
+
 
     public void initialize(){
         ConnectionToServer connection = Model.getInstance().getConnectionToServer();
@@ -82,7 +84,7 @@ public class EditPlacesController {
                 filteredPlaces.remove(place);
                 updateInfo(filteredPlaces);
             }else {
-                errorLabel.setText("Вы не выбрали ни одного материала");
+               NotificationUtil.showErrorNotification(notificationPane,"Вы не выбрали ни одного материала");
             }
         });
 
@@ -119,7 +121,7 @@ public class EditPlacesController {
                         boolean nameExists = allPlaces.stream()
                                 .anyMatch(place -> place.getPlaceName().equalsIgnoreCase(newPlace.getPlaceName()));
                        if (nameExists) {
-                           errorLabel.setText("Такой товар уже существует");
+                           NotificationUtil.showErrorNotification(notificationPane,"Такой товар уже существует");
                            return;
                        }
                         connection.sendObject(new AdminRequest("addPlace", newPlace));
@@ -128,13 +130,13 @@ public class EditPlacesController {
                         updateInfo(filteredPlaces);
 
                     } catch (Exception e) {
-                        errorLabel.setText("Ошибка при добавлении: " + e.getMessage());
+                        NotificationUtil.showErrorNotification(notificationPane,"Ошибка при добавлении");
                     }
                 });
                 dialog.showAndWait();
 
             } catch (IOException e) {
-                errorLabel.setText("Ошибка загрузки диалога: " + e.getMessage());
+                NotificationUtil.showErrorNotification(notificationPane,"Ошибка загрузки диалога");
             }
         });
 
@@ -155,30 +157,47 @@ public class EditPlacesController {
                 dialog.showAndWait();
 
             }catch (IOException e){
-                errorLabel.setText("Ошибка загрузки диалога: <3" + e.getMessage());
+                NotificationUtil.showErrorNotification(notificationPane,"Ошибка загрузки диалога");
             }
         });
 
         editMaterial.setOnAction(event -> {
-            Places selectedPlace = filteredPlaces.get(placesTable.getSelectionModel().getSelectedIndex());
-            try{
+            Places selectedPlace = placesTable.getSelectionModel().getSelectedItem();
+            if(selectedPlace == null) {
+                NotificationUtil.showErrorNotification(notificationPane,"Выберите товар для редактирования");
+                return;
+            }
+            try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Admin/EditPlaceDialogPane.fxml"));
                 DialogPane dialogPane = loader.load();
-                EditPlaceDialogPaneController controllerForRed = loader.getController();
+                EditPlaceDialogPaneController controller = loader.getController();
                 Dialog<Void> dialog = new Dialog<>();
                 dialog.setTitle("Окно редактирования");
                 dialog.setDialogPane(dialogPane);
-                controllerForRed.setDialog(dialog);
-                controllerForRed.setCategoriesList(allCategories);
-                controllerForRed.setSelectedPlace(selectedPlace);
-                controllerForRed.setMaterialAddedCallback(newPlace -> {
-                    connection.sendObject(new AdminRequest("editPlace",selectedPlace,newPlace));
+                controller.setDialog(dialog);
+                controller.setCategoriesList(allCategories);
+                controller.setSelectedPlace(selectedPlace);
+                controller.setMaterialAddedCallback(modifiedPlace -> {
+                    if(modifiedPlace != null) {
+                        connection.sendObject(new AdminRequest("editPlace", selectedPlace, modifiedPlace));
+                        String request = (String) connection.receiveObject();
+                        if(request.contains("обновлено")){
+                            NotificationUtil.showNotification(notificationPane,request);
+                        }else{
+                            NotificationUtil.showErrorNotification(notificationPane,request);
+                        }
+                        int index = allPlaces.indexOf(selectedPlace);
+                        if(index >= 0) {
+                            allPlaces.set(index, modifiedPlace);
+                            filteredPlaces.setAll(allPlaces);
+                            updateInfo(filteredPlaces);
+                        }
+                    }
                 });
                 dialog.showAndWait();
-            }catch (IOException e) {
-                errorLabel.setText("Ошибка загрузки диалога: <3" + e.getMessage());
+            } catch (IOException e) {
+                NotificationUtil.showErrorNotification(notificationPane,"Ошибка загрузки диалога");
             }
-
         });
     }
 

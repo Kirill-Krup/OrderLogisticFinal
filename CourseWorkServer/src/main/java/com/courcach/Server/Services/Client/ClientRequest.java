@@ -1,6 +1,7 @@
 package com.courcach.Server.Services.Client;
 
 import com.courcach.Server.Services.ClassesForRequests.Orders;
+import com.courcach.Server.Services.ClassesForRequests.ReportModel;
 import com.courcach.Server.Services.ClassesForRequests.Users;
 
 import java.io.Serializable;
@@ -10,6 +11,8 @@ public class ClientRequest implements Serializable {
     private Float sum;
     private Orders order;
     private Users user;
+    private int orderNumber;
+    private ReportModel report;
 
     public ClientRequest(String request) {
         this.request = request;
@@ -19,6 +22,12 @@ public class ClientRequest implements Serializable {
         this.request = request;
         this.user = user;
         this.sum = sum;
+    }
+
+    public ClientRequest(String request,int orderNumber,Users user) {
+        this.request = request;
+        this.orderNumber = orderNumber;
+        this.user = user;
     }
 
     public ClientRequest(String request,Orders order) {
@@ -31,8 +40,15 @@ public class ClientRequest implements Serializable {
         this.user = user;
     }
 
+    public ClientRequest(String request,ReportModel report) {
+        this.request = request;
+        this.report = report;
+    }
+
     public String getRequest() {return request;}
     public Float getSum() {return sum;}
     public Orders getOrder() {return order;}
     public Users getUser() {return user;}
+    public int getOrderNumber() {return orderNumber;}
+    public ReportModel getReport() {return report;}
 }

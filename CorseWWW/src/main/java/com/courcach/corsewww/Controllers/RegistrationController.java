@@ -97,7 +97,5 @@ public class RegistrationController {
         errorText.setVisible(true);
         errorText.setText(error);
     }
-
-
 }
 

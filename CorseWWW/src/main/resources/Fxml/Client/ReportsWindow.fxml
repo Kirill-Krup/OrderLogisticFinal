@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="840.0" prefWidth="1000.0" stylesheets="@../../Styles/Client.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.Client.ReportsWindowController">
+   <children>
+      <ImageView fitHeight="840.0" fitWidth="1050.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../Images/wallpaper-telegram-pixelbox.ru-17.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="114.0" layoutY="80.0" prefHeight="66.0" prefWidth="841.0" style="-fx-background-color: grey;">
+         <children>
+            <Button fx:id="myReportsBut" layoutX="153.0" layoutY="14.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="114.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Мои отзывы" />
+            <Button fx:id="answersBut" layoutX="270.0" layoutY="14.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="63.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Ответы" />
+            <Button fx:id="newReportBut" layoutX="45.0" layoutY="14.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="105.0" style="-fx-background-color: green; -fx-border-radius: 10px 0px 0px 10px; -fx-background-radius: 10px 0px 0px 10px; -fx-cursor: hand;" text="Оставить отзыв" />
+            <TextField fx:id="searchField" layoutX="459.0" layoutY="11.0" prefHeight="39.0" prefWidth="324.0" promptText="Поиск..." style="-fx-cursor: hand;" />
+            <ImageView fitHeight="32.0" fitWidth="39.0" layoutX="734.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Images/magnifying-glass.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="counterLabel" alignment="CENTER" layoutX="322.0" layoutY="4.0" prefHeight="26.0" prefWidth="24.0" style="-fx-background-color: green; -fx-background-radius: 100px; -fx-border-radius: 100px;">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="paneWithReport" layoutX="114.0" layoutY="675.0" prefHeight="158.0" prefWidth="841.0" style="-fx-background-color: grey;">
+         <children>
+            <TextArea fx:id="areaForReport" layoutX="19.0" layoutY="61.0" prefHeight="81.0" prefWidth="813.0" promptText="Выберите заказ, на который хотите оставить отзыв" />
+            <Button fx:id="sendReportBut" layoutX="764.0" layoutY="86.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="63.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
+               <graphic>
+                  <ImageView fx:id="sendImage" fitHeight="43.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Images/send.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Pane fx:id="paneWithRating" layoutX="33.0" layoutY="7.0" prefHeight="45.0" prefWidth="522.0">
+               <children>
+                  <Text layoutX="22.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Оцените нашу работу" wrappingWidth="211.837646484375">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <ToggleButton layoutX="273.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="★" textFill="WHITE" userData="1">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="starsGroup" />
+                     </toggleGroup>
+                  </ToggleButton>
+                  <ToggleButton layoutX="310.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="★" textFill="WHITE" toggleGroup="$starsGroup" userData="2">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </ToggleButton>
+                  <ToggleButton layoutX="347.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="★" textFill="WHITE" toggleGroup="$starsGroup" userData="3">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </ToggleButton>
+                  <ToggleButton layoutX="384.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="★" textFill="WHITE" toggleGroup="$starsGroup" userData="4">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </ToggleButton>
+                  <ToggleButton layoutX="421.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="★" textFill="WHITE" toggleGroup="$starsGroup" userData="5">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </ToggleButton>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <ListView fx:id="listForComments" layoutX="114.0" layoutY="150.0" prefHeight="517.0" prefWidth="841.0" />
+      <HBox fx:id="topPane" alignment="CENTER_LEFT" layoutY="-2.0" prefHeight="66.0" prefWidth="1050.0" styleClass="topMenu">
+         <children>
+            <Button fx:id="menuBut" cancelButton="true" mnemonicParsing="false" prefHeight="38.0" prefWidth="42.0" styleClass="allScreen" text="≡">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Button>
+            <Text fx:id="homeText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Главная" underline="true" wrappingWidth="56.20819091796875">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </Text>
+            <Button fx:id="exitBut" mnemonicParsing="false" text="Выйти">
+               <HBox.margin>
+                  <Insets left="700.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <StackPane fx:id="notificationPane" layoutX="245.0" layoutY="3.0" mouseTransparent="true" prefHeight="60.0" prefWidth="554.0" stylesheets="@../../Styles/StyleForNotification.css" />
+      <VBox fx:id="menuBox" layoutX="-1.0" opacity="0.0" prefHeight="840.0" prefWidth="296.0" styleClass="menu">
+         <children>
+            <ImageView fitHeight="87.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true" styleClass="menu">
+               <image>
+                  <Image url="@../../Images/logo.png" />
+               </image>
+               <VBox.margin>
+                  <Insets top="170.0" />
+               </VBox.margin>
+            </ImageView>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu" text="LogisticOrder">
+               <VBox.margin>
+                  <Insets bottom="40.0" top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Button fx:id="addNewOrder" mnemonicParsing="false" prefHeight="26.0" prefWidth="162.0" styleClass="menu" text="Оформить заказ">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="checkUserHistory" mnemonicParsing="false" prefHeight="38.0" prefWidth="176.0" styleClass="menu" text="Посмотреть историю">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="checkMyOrder" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" styleClass="menu" text="Ход выполнения заказа">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="openWallet" mnemonicParsing="false" prefHeight="38.0" prefWidth="176.0" styleClass="menu" text="Пополнить кошелёк">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="reportsBut" mnemonicParsing="false" styleClass="menu" text="Отзывы">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="backBut" mnemonicParsing="false" text="Назад">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Pane prefHeight="66.0" prefWidth="280.0" style="-fx-background-color: transparent;">
+               <VBox.margin>
+                  <Insets top="150.0" />
+               </VBox.margin>
+               <children>
+                  <Text fill="WHITE" layoutX="8.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ваш баланс: ">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="MyWallet" alignment="CENTER" layoutX="124.0" layoutY="7.0" prefHeight="29.0" prefWidth="73.0" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Text fill="WHITE" layoutX="196.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BYN" wrappingWidth="35.26611328125">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+      <Pane fx:id="mainPane" layoutX="293.0" layoutY="64.0" mouseTransparent="true" prefHeight="776.0" prefWidth="757.0" />
+   </children>
+</AnchorPane>

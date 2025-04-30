@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="800.0" prefWidth="1000.0" styleClass="mainWindow" stylesheets="@../../Styles/CheckOrdersAdmin.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.Admin.CheckOrdersController">
    <children>
@@ -15,28 +20,55 @@
             <Image url="@../../Images/background.jpg" />
          </image>
       </ImageView>
-      <TableView layoutX="27.0" layoutY="34.0" prefHeight="682.0" prefWidth="945.0">
-        <columns>
-          <TableColumn prefWidth="150.0" text="Логин заказчика" />
-          <TableColumn minWidth="0.0" prefWidth="94.0" text="Цена" />
-            <TableColumn prefWidth="123.0" text="Дата заказа" />
-            <TableColumn prefWidth="341.0" text="Материалы" />
-            <TableColumn prefWidth="91.0" text="Количество" />
-            <TableColumn prefWidth="145.0" text="Статус" />
-        </columns>
-      </TableView>
-      <Pane layoutX="27.0" layoutY="720.0" prefHeight="70.0" prefWidth="945.0" styleClass="mainWindow">
-         <children>
-            <Button layoutX="45.0" layoutY="23.0" mnemonicParsing="false" styleClass="mainWindow" text="Удалить" />
-            <Button layoutX="844.0" layoutY="23.0" mnemonicParsing="false" styleClass="mainWindow" text="Добавить" />
-            <Button layoutX="407.0" layoutY="23.0" mnemonicParsing="false" styleClass="mainWindow" text="Редактировать" />
-         </children>
-      </Pane>
-      <ImageView fitHeight="46.0" fitWidth="32.0" layoutX="8.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="46.0" fitWidth="32.0" layoutX="4.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Images/previous.png" />
          </image>
       </ImageView>
-      <Button fx:id="backBut" layoutX="8.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="38.0" styleClass="mainWindow" />
+      <Button fx:id="backBut" layoutX="1.0" layoutY="11.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="38.0" styleClass="mainWindow" />
+      <ListView fx:id="listForHistory" layoutX="47.0" layoutY="63.0" prefHeight="705.0" prefWidth="899.0" />
+      <Pane layoutX="47.0" layoutY="11.0" prefHeight="52.0" prefWidth="899.0">
+         <children>
+            <Button fx:id="activeBut" layoutX="15.0" layoutY="11.0" mnemonicParsing="false" style="-fx-background-color: green; -fx-border-radius: 10px 0px 0px 10px; -fx-background-radius: 10px 0px 0px 10px;" text="Активные">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="othersBut" layoutX="104.0" layoutY="11.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="87.0" style="-fx-background-radius: 0px 10px 10px 0px; -fx-border-radius: 0px 10px 10px 0px;" text="Другие">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Pane layoutX="197.0" layoutY="7.0" prefHeight="42.0" prefWidth="479.0" style="-fx-background-color: rgba(128,128,128,0.9);">
+               <children>
+                  <DatePicker fx:id="firstDate" layoutX="112.0" layoutY="8.0" prefHeight="25.0" prefWidth="146.0" />
+                  <DatePicker fx:id="lastDate" layoutX="306.0" layoutY="8.0" prefHeight="25.0" prefWidth="146.0" />
+                  <Text fill="WHITE" layoutX="269.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="→">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="36.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Период">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <StackPane fx:id="notificationPane" layoutX="26.0" layoutY="-15.0" mouseTransparent="true" prefHeight="52.0" prefWidth="436.0" stylesheets="@../../Styles/StyleForNotification.css" />
+               </children>
+            </Pane>
+            <TextField fx:id="searchField" layoutX="686.0" layoutY="7.0" prefHeight="42.0" prefWidth="199.0" promptText="Поиск..." />
+            <ImageView fitHeight="32.0" fitWidth="38.0" layoutX="832.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Images/magnifying-glass.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

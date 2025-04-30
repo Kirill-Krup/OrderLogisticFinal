@@ -54,7 +54,7 @@ public class LoginController {
                 showError("Неверно введён логин или пароль");
                 return;
             }
-            Model.getInstance().setCurrentUser(new Users(response.getUser().getLogin(),response.getUser().getFirstName(),response.getUser().getLastName(),response.getUser().getEmail(),response.getUser().getWallet(),response.getUser().getPhotoPath()));
+            Model.getInstance().setCurrentUser(new Users(response.getUser().getLogin(),response.getUser().getFirstName(),response.getUser().getLastName(),response.getUser().getEmail(),response.getUser().getWallet(),response.getUser().getLastLogin()));
             Stage stage = (Stage) enterBut.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(stage);
             switch (response.getRole()){
@@ -73,5 +73,5 @@ public class LoginController {
     private void showError(String error) {
         errorLabel.setVisible(true);
         errorLabel.setText(error);
-      }
+    }
 }

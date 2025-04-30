@@ -64,10 +64,10 @@ public class EditPlaceDialogPaneController {
         saveButton.setOnAction(event->{
             Optional<Places> result = getResultPlace();
             result.ifPresent(place -> {
-               if(callback != null) {
-                   this.selectedPlace = place;
-               }
-               closeDialogWindow();
+                if (callback != null) {
+                    callback.onMaterialAdded(place);
+                }
+                closeDialogWindow();
             });
         });
     }
@@ -108,31 +108,44 @@ public class EditPlaceDialogPaneController {
     }
 
     private Optional<Places> getResultPlace(){
-        int count = 0;
-        if(nameField.getText() != null){
-            selectedPlace.setPlaceName(nameField.getText());
-            count++;
+        Places modifiedPlace = new Places(selectedPlace);
+        boolean isModified = false;
+
+        if(!nameField.getText().isEmpty() && !nameField.getText().equals(selectedPlace.getPlaceName())){
+            modifiedPlace.setPlaceName(nameField.getText());
+            isModified = true;
         }
-        if (descriptionArea.getText() != null){
-            selectedPlace.setDescription(descriptionArea.getText());
-            count++;
+        if(!descriptionArea.getText().isEmpty() && !descriptionArea.getText().equals(selectedPlace.getDescription())){
+            modifiedPlace.setDescription(descriptionArea.getText());
+            isModified = true;
         }
-        if(categoryCombo.getValue() != null){
-            selectedPlace.setCategory(categoryCombo.getValue());
-            count++;
+        if(categoryCombo.getValue() != null && !categoryCombo.getValue().equals(selectedPlace.getCategory())){
+            modifiedPlace.setCategory(categoryCombo.getValue());
+            isModified = true;
         }
-        if(!priceField.getText().trim().isEmpty() && priceField.getText()!= null){
-            selectedPlace.setPrice(Float.parseFloat(priceField.getText()));
-            count++;
+        if(!priceField.getText().trim().isEmpty()){
+            try {
+                float newPrice = Float.parseFloat(priceField.getText());
+                if(newPrice != selectedPlace.getPrice()) {
+                    modifiedPlace.setPrice(newPrice);
+                    isModified = true;
+                }
+            } catch (NumberFormatException e) {
+                return Optional.empty();
+            }
         }
-        if(!quantityField.getText().trim().isEmpty() && quantityField.getText() != null){
-            selectedPlace.setQuantity(Integer.parseInt(quantityField.getText()));
-            count++;
+        if(!quantityField.getText().trim().isEmpty()){
+            try {
+                int newQuantity = Integer.parseInt(quantityField.getText());
+                if(newQuantity != selectedPlace.getQuantity()) {
+                    modifiedPlace.setQuantity(newQuantity);
+                    isModified = true;
+                }
+            } catch (NumberFormatException e) {
+                return Optional.empty();
+            }
         }
-        if(count<1){
-            return Optional.empty();
-        }else{
-            return Optional.of(selectedPlace);
-        }
+
+        return isModified ? Optional.of(modifiedPlace) : Optional.empty();
     }
 }

@@ -1,6 +1,8 @@
 package com.courcach.corsewww.Controllers.Client;
 
 
+import com.courcach.Server.Services.Client.ClientRequest;
+import com.courcach.corsewww.Models.ConnectionToServer;
 import com.courcach.corsewww.Models.Model;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -53,6 +55,12 @@ public class ClientController {
     @FXML
     private Label MyWallet;
 
+    @FXML
+    private Button checkUserHistory;
+
+    @FXML
+    private Button reportsBut;
+
     public void initialize() {
         menuBox.setMouseTransparent(true);
         MyWallet.setText(String.valueOf(Model.getInstance().getCurrentUser().getWallet()));
@@ -79,10 +87,22 @@ public class ClientController {
             Model.getInstance().getViewFactory().showCheckMyOrderWindow();
         });
 
+        checkUserHistory.setOnAction(e -> {
+           Stage stage = (Stage) checkUserHistory.getScene().getWindow();
+           Model.getInstance().getViewFactory().closeStage(stage);
+           Model.getInstance().getViewFactory().showCheckUserHistoryWindow();
+        });
+
         openWallet.setOnAction(e -> {
             Stage stage = (Stage) openWallet.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(stage);
             Model.getInstance().getViewFactory().showWalletWindow();
+        });
+
+        reportsBut.setOnAction(e -> {
+            Stage stage = (Stage) reportsBut.getScene().getWindow();
+            Model.getInstance().getViewFactory().closeStage(stage);
+            Model.getInstance().getViewFactory().showReportsWindow();
         });
 
         backBut.setOnAction(e -> {
@@ -105,6 +125,7 @@ public class ClientController {
         });
 
         exitBut.setOnAction(e -> {
+            Model.getInstance().getConnectionToServer().sendObject(new ClientRequest("exit"));
             Stage stage = (Stage) menuBut.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(stage);
             Model.getInstance().getViewFactory().showLoginWindow();

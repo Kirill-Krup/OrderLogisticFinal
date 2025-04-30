@@ -19,6 +19,14 @@ public class Places implements Serializable {
         this.quantity = quantity;
     }
 
+    public Places(Places selectedPlace) {
+        this.placeName = selectedPlace.placeName;
+        this.description = selectedPlace.description;
+        this.quantity = selectedPlace.quantity;
+        this.price = selectedPlace.price;
+        this.category = selectedPlace.category;
+    }
+
     public String getPlaceName() {return placeName;}
     public String getDescription() {return description;}
     public float getPrice() {return price;}

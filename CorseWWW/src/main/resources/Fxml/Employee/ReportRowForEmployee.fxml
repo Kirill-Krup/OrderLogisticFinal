@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="100.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.Employee.ReportRowForEmployeeController">
+   <children>
+      <Line endX="-100.0" endY="-49.0" layoutX="115.0" layoutY="57.0" startX="-100.0" startY="36.0" stroke="#32a803" strokeWidth="5.0" />
+      <Label fx:id="orderNumberField" layoutX="26.0" layoutY="9.0" prefHeight="39.0" prefWidth="88.0">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <Label fx:id="loginField" layoutX="26.0" layoutY="45.0" prefHeight="27.0" prefWidth="145.0" textFill="#7c7c7c">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="dateOfReportField" layoutX="25.0" layoutY="73.0" prefHeight="21.0" prefWidth="164.0" textFill="#727272">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="starsLabel" alignment="CENTER_RIGHT" layoutX="720.0" layoutY="29.0" prefHeight="43.0" prefWidth="157.0" textFill="#048608">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="areaWithReport" editable="false" layoutX="201.0" layoutY="11.0" prefHeight="80.0" prefWidth="515.0" />
+   </children>
+</AnchorPane>

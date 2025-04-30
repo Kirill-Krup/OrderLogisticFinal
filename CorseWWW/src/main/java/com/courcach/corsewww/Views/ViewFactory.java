@@ -72,10 +72,24 @@ public class ViewFactory {
         createStage(fxmlLoader);
     }
 
+    public  void showReportsWindow() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Client/ReportsWindow.fxml"));
+        createStage(fxmlLoader);
+    }
 
     // Employee section
     public  void showEmployeeWindow() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Employee/Employee.fxml"));
+        createStage(fxmlLoader);
+    }
+
+    public  void showClientOrdersForEmployeeWindow() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Employee/ClientOrdersForEmployee.fxml"));
+        createStage(fxmlLoader);
+    }
+
+    public  void showReportsWorkForEmployeeWindow() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Employee/ReportsWork.fxml"));
         createStage(fxmlLoader);
     }
 

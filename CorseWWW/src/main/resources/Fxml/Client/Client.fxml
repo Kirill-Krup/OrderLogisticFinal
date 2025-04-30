@@ -80,7 +80,7 @@
                   <Image url="@../../Images/logo.png" />
                </image>
                <VBox.margin>
-                  <Insets top="230.0" />
+                  <Insets top="210.0" />
                </VBox.margin>
             </ImageView>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu" text="LogisticOrder">
@@ -107,6 +107,11 @@
                </font>
             </Button>
             <Button fx:id="openWallet" mnemonicParsing="false" prefHeight="38.0" prefWidth="176.0" styleClass="menu" text="Пополнить кошелёк">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="reportsBut" mnemonicParsing="false" styleClass="menu" text="Отзывы">
                <font>
                   <Font size="15.0" />
                </font>

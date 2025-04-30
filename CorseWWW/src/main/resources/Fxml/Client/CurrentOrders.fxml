@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="112.0" prefWidth="890.0" stylesheets="@../../Styles/CurrentOrders.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.Client.CurrentOrdersController">
+   <children>
+      <Line fx:id="statusLine" endX="-59.16668701171875" endY="84.0" layoutX="81.0" layoutY="14.0" startX="-59.16667175292969" startY="-4.6666669845581055" strokeWidth="5.0" />
+      <Label fx:id="orderNumber" layoutX="32.0" layoutY="7.0" prefHeight="54.0" prefWidth="131.0">
+         <font>
+            <Font size="27.0" />
+         </font></Label>
+      <Button fx:id="cancelOrderBut" layoutX="786.0" layoutY="15.0" mnemonicParsing="false" prefHeight="82.0" prefWidth="90.0" styleClass="cancelOrderBut">
+         <graphic>
+            <ImageView fx:id="cancelImage" fitHeight="65.0" fitWidth="77.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Images/remove.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label fx:id="price" layoutX="32.0" layoutY="52.0" prefHeight="26.0" prefWidth="90.0" textFill="#006b09" />
+      <Label fx:id="statusField" alignment="CENTER" layoutX="603.0" layoutY="37.0" prefHeight="32.0" prefWidth="122.0">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <Label fx:id="fieldForPlaces" alignment="CENTER" layoutX="201.0" layoutY="5.0" prefHeight="102.0" prefWidth="390.0" wrapText="true" />
+      <Label fx:id="isPayment" layoutX="32.0" layoutY="79.0" prefHeight="19.0" prefWidth="131.0" />
+      <Label fx:id="dateField" alignment="CENTER_RIGHT" layoutX="592.0" layoutY="75.0" prefHeight="26.0" prefWidth="152.0" textFill="#7c7a7a">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

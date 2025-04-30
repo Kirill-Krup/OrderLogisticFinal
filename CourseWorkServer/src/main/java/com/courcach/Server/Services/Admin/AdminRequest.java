@@ -1,9 +1,11 @@
 package com.courcach.Server.Services.Admin;
 
+import com.courcach.Server.Services.ClassesForRequests.Orders;
 import com.courcach.Server.Services.ClassesForRequests.Places;
 import com.courcach.Server.Services.ClassesForRequests.Users;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class AdminRequest implements Serializable {
     private final String request;
@@ -11,6 +13,9 @@ public class AdminRequest implements Serializable {
     private Users user;
     private Places place;
     private Places selectedPlace;
+    private Orders order;
+    private LocalDate firstDate;
+    private LocalDate lastDate;
 
     public AdminRequest(String request) {
         this.request = request;
@@ -37,9 +42,23 @@ public class AdminRequest implements Serializable {
         this.selectedPlace = place1;
     }
 
+    public AdminRequest(String request, Orders order){
+        this.request = request;
+        this.order = order;
+    }
+
+    public AdminRequest(String request, LocalDate firstDate, LocalDate lastDate){
+        this.request = request;
+        this.firstDate = firstDate;
+        this.lastDate = lastDate;
+    }
+
     public String getRequest() {return request;}
     public Users getUser() {return user;}
     public Places getPlace() {return place;}
     public String getCategory() {return category;}
     public Places getSelectedPlace() {return selectedPlace;}
+    public Orders getOrder() {return order;}
+    public LocalDate getFirstDate() {return firstDate;}
+    public LocalDate getLastDate() {return lastDate;}
 }

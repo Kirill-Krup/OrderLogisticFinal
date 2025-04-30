@@ -23,13 +23,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AddNewOrderController {
+public class  AddNewOrderController {
     Orders newOrder = new Orders();
     private List<Places> allPlaces;
     private List<Places> myOrders;
     private int count = 0;
     private static Boolean cartIsOpen = false;
     private static float resulPrice= 0;
+
+    @FXML
+    private Button checkMyOrder;
 
     @FXML
     private Button deleteBut;
@@ -112,6 +115,9 @@ public class AddNewOrderController {
     @FXML
     private Label MyWallet;
 
+    @FXML
+    private Button reportsBut;
+
     public void initialize() {
         initialLists();
         ConnectionToServer connect = Model.getInstance().getConnectionToServer();
@@ -170,8 +176,10 @@ public class AddNewOrderController {
             }else if(selectTypeOfDelivery.getValue().equals("Самовывоз")){
                 newOrder.setTypeOfDelivery(selectTypeOfDelivery.getValue());
                 newOrder.setAddressOfDelivery(selectAdress.getSelectionModel().getSelectedItem());
-            }
-            else{
+            }else if(myOrders.isEmpty()){
+                NotificationUtil.showErrorNotification(notificationPane,"Ваша корзина пуста");
+                return;
+            } else{
                 NotificationUtil.showErrorNotification( notificationPane,"Выберите место доставки");
                 return;
             }
@@ -186,10 +194,12 @@ public class AddNewOrderController {
             newOrder.setUserLogin(Model.getInstance().getCurrentUser().getLogin());
             newOrder.setTotalPrice(resulPrice);
             newOrder.setOrderPlaces(myOrders);
+            myOrders.clear();
             connect.sendObject(new ClientRequest("addNewOrder",newOrder));
             NotificationUtil.showNotification(notificationPane,"Заказ успешно создан");
+            counter.setText("0");
+            refreshSum();
         });
-
 
         cart.setOnAction(event -> {
             if (cartIsOpen) {
@@ -208,7 +218,6 @@ public class AddNewOrderController {
                 refreshCartOpener();
             }
         });
-
 
     }
 
@@ -240,6 +249,12 @@ public class AddNewOrderController {
             Model.getInstance().getViewFactory().showAddNewOrderWindow();
         });
 
+        checkMyOrder.setOnAction(event->{
+            Stage stage = (Stage) checkMyOrder.getScene().getWindow();
+            Model.getInstance().getViewFactory().closeStage(stage);
+            Model.getInstance().getViewFactory().showCheckMyOrderWindow();
+        });
+
         openWallet.setOnAction(e -> {
             Stage stage = (Stage) openWallet.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(stage);
@@ -258,6 +273,13 @@ public class AddNewOrderController {
             Model.getInstance().getViewFactory().closeStage(stage);
             Model.getInstance().getViewFactory().showClientWindow();
         });
+
+        reportsBut.setOnAction(e -> {
+            Stage stage = (Stage) reportsBut.getScene().getWindow();
+            Model.getInstance().getViewFactory().closeStage(stage);
+            Model.getInstance().getViewFactory().showReportsWindow();
+        });
+
         exitBut.setOnAction(e -> {
             Model.getInstance().getConnectionToServer().sendObject(new ClientRequest("exit"));
             Stage stage = (Stage) menuBut.getScene().getWindow();

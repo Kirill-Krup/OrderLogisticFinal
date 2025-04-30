@@ -2,7 +2,9 @@ package com.courcach.Server.Handlers;
 
 import com.courcach.Server.Services.Admin.AdminRequest;
 import com.courcach.Server.Services.Admin.Responce.AllUsersResponce;
+import com.courcach.Server.Services.Admin.Responce.OrderResponce;
 import com.courcach.Server.Services.Admin.Responce.PlacesResponce;
+import com.courcach.Server.Services.ClassesForRequests.Orders;
 import com.courcach.Server.Services.ClassesForRequests.Places;
 import com.courcach.Server.Services.ClassesForRequests.Users;
 
@@ -24,6 +26,7 @@ public class AdminHandler extends RoleHandler {
             if(request instanceof AdminRequest) {
                 AllUsersResponce service = new AllUsersResponce();
                 PlacesResponce placesService = new PlacesResponce();
+                OrderResponce orderService = new OrderResponce();
                 switch (request.getRequest()) {
                     // USERS
                     case "takeAllUsers"->{
@@ -70,11 +73,27 @@ public class AdminHandler extends RoleHandler {
                     }
 
                     case "editPlace"->{
-                        System.out.println(request.getPlace().getPlaceName()+ " "+ request.getSelectedPlace().getPlaceName());
+                        System.out.println(request.getSelectedPlace().getPlaceName()+" " + request.getPlace().getPlaceName());
+                        String req = placesService.editPlace(request.getPlace(), request.getSelectedPlace());
+                        out.writeObject(req);
+                        out.flush();
                     }
 
+                    case "giveMeAllOrders"->{
+                        List<Orders> allHistory= orderService.allOrders();
+                        out.writeObject(allHistory);
+                        out.flush();
+                    }
 
+                    case "deleteOrder"->{
+                        orderService.deleteOrder(request.getOrder().getOrderNumber());
+                    }
 
+                    case "giveMeOrdersInDates"->{
+                        List<Orders> inDates = orderService.getOrdersByDateRange(request.getFirstDate(), request.getLastDate());
+                        out.writeObject(inDates);
+                        out.flush();
+                    }
 
                     case "exit"->{
                         exit = true;

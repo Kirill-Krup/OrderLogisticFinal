@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PlacesResponce {
     public List<Places> getAllPlaces() {
@@ -100,6 +101,50 @@ public class PlacesResponce {
             stmt.executeUpdate();
         }catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public String editPlace(Places oldPlace, Places newPlace) {
+        StringBuilder query = new StringBuilder("UPDATE places SET ");
+        List<Object> params = new ArrayList<>();
+
+        if (!Objects.equals(oldPlace.getPlaceName(), newPlace.getPlaceName())) {
+            query.append("placeName = ?, ");
+            params.add(newPlace.getPlaceName());
+        }
+        if (!Objects.equals(oldPlace.getDescription(), newPlace.getDescription())) {
+            query.append("description = ?, ");
+            params.add(newPlace.getDescription());
+        }
+        if (!Objects.equals(oldPlace.getCategory(), newPlace.getCategory())) {
+            query.append("category = ?, ");
+            params.add(newPlace.getCategory());
+        }
+        if (oldPlace.getPrice() != newPlace.getPrice()) {
+            query.append("price = ?, ");
+            params.add(newPlace.getPrice());
+        }
+        if (oldPlace.getQuantity() != newPlace.getQuantity()) {
+            query.append("quantity = ?, ");
+            params.add(newPlace.getQuantity());
+        }
+
+        if (params.isEmpty()) {
+            return "Ничего не изменилось";
+        }
+
+        query.setLength(query.length() - 2);
+        query.append(" WHERE placeName = ?");
+        params.add(oldPlace.getPlaceName());
+        try (Connection connection = DatabaseConnection.getConnection();PreparedStatement stmt = connection.prepareStatement(query.toString())) {
+            for (int i = 0; i < params.size(); i++) {
+                stmt.setObject(i + 1, params.get(i));
+            }
+            stmt.executeUpdate();
+            return "Успешно обновлено";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Ошибка при обновлении: " + e.getMessage();
         }
     }
 

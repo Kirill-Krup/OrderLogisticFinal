@@ -8,8 +8,10 @@
 }
 
 .mainWindow Button:hover{
-    -fx-text-fill: red;
-    -fx-font-size: 13px;
+    -fx-text-fill: #024a60;
+    -fx-font-size: 17px;
     -fx-translate-y: -2px;
     -fx-translate-x: -2px;
 }
+
+
