@@ -4,11 +4,13 @@ import com.courcach.Server.Services.Admin.AdminRequest;
 import com.courcach.Server.Services.ClassesForRequests.Users;
 import com.courcach.corsewww.Models.ConnectionToServer;
 import com.courcach.corsewww.Models.Model;
+import com.courcach.corsewww.Views.NotificationUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -19,7 +21,7 @@ public class EditUsersController {
     private ObservableList<Users> filteredUsers = FXCollections.observableArrayList();
 
     @FXML
-    private Text errorLabel;
+    private StackPane notificationPane;
 
     @FXML
     private Button backBut;
@@ -78,7 +80,7 @@ public class EditUsersController {
                 selectedUser.setIsBlocked(true);
                 updateInfo(filteredUsers);
             } else {
-                errorLabel.setText("Вы никого не выбрали");
+                showError();
             }
         });
 
@@ -89,7 +91,7 @@ public class EditUsersController {
                 selectedUser.setIsBlocked(false);
                 updateInfo(filteredUsers);
             } else {
-                errorLabel.setText("Вы никого не выбрали");
+                showError();
             }
         });
 
@@ -100,7 +102,7 @@ public class EditUsersController {
                filteredUsers.remove(selectedUser);
                updateInfo(filteredUsers);
            }else {
-               errorLabel.setText("Вы никого не выбрали");
+               showError();
            }
         });
 
@@ -111,7 +113,7 @@ public class EditUsersController {
                 selectedUser.setRole("employee");
                 updateInfo(filteredUsers);
             }else {
-                errorLabel.setText("Вы никого не выбрали");
+                showError();
             }
         });
 
@@ -153,5 +155,9 @@ public class EditUsersController {
             }
         });
         listOfUsers.setItems(filteredUsers);
+    }
+
+    private void showError() {
+        NotificationUtil.showErrorNotification(notificationPane, "Вы никого не выбрали");
     }
 }

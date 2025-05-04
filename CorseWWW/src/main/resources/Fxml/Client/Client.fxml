@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -73,6 +74,7 @@
             </Button>
          </children>
       </HBox>
+      <StackPane fx:id="notificationPane" layoutX="298.0" prefHeight="45.0" prefWidth="478.0" stylesheets="@../../Styles/StyleForNotification.css" />
       <VBox fx:id="menuBox" layoutY="-1.0" opacity="0.0" prefHeight="802.0" prefWidth="299.0" styleClass="menu">
          <children>
             <ImageView fitHeight="87.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true" styleClass="menu">

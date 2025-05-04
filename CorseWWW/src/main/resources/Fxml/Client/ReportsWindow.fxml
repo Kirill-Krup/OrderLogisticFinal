@@ -102,17 +102,10 @@
                   <Font size="13.0" />
                </font>
             </Button>
-            <Text fx:id="homeText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Главная" underline="true" wrappingWidth="56.20819091796875">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="20.0" />
-               </HBox.margin>
-            </Text>
+            <Button fx:id="mainBut" mnemonicParsing="false" text="Главная" />
             <Button fx:id="exitBut" mnemonicParsing="false" text="Выйти">
                <HBox.margin>
-                  <Insets left="700.0" />
+                  <Insets left="840.0" />
                </HBox.margin>
             </Button>
          </children>
@@ -190,6 +183,16 @@
             </Pane>
          </children>
       </VBox>
-      <Pane fx:id="mainPane" layoutX="293.0" layoutY="64.0" mouseTransparent="true" prefHeight="776.0" prefWidth="757.0" />
+      <Pane fx:id="mainPane" layoutX="290.0" layoutY="64.0" mouseTransparent="true" prefHeight="776.0" prefWidth="760.0" />
+      <ImageView fx:id="sadImage" fitHeight="303.0" fitWidth="311.0" layoutX="374.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../../Images/sad.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="noteText" alignment="CENTER" layoutX="293.0" layoutY="546.0" text="У вас нет заказов на которые можно оставить отзыв" visible="false">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -5,10 +5,11 @@ import com.courcach.Server.Services.AuthResponse;
 import com.courcach.Server.Services.ClassesForRequests.Users;
 import com.courcach.corsewww.Models.ConnectionToServer;
 import com.courcach.corsewww.Models.Model;
+import com.courcach.corsewww.Views.NotificationUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class LoginController {
@@ -18,8 +19,6 @@ public class LoginController {
     @FXML
     private Button enterBut;
 
-    @FXML
-    private Text errorLabel;
 
     @FXML
     private TextField loginInput;
@@ -27,6 +26,8 @@ public class LoginController {
     @FXML
     private TextField passwordInput;
 
+    @FXML
+    private StackPane notificationPane;
 
 
     public void initialize() {
@@ -40,18 +41,18 @@ public class LoginController {
             String login = loginInput.getText();
             String password = passwordInput.getText();
             if(login.isEmpty() || password.isEmpty()) {
-                showError("Пожалуйста, заполните все поля");
+                NotificationUtil.showErrorNotification(notificationPane,"Введены не все поля");
                 return;
             }
             ConnectionToServer connection = Model.getInstance().getConnectionToServer();
             connection.sendObject(new AuthRequest(login,password,"LOGIN"));
             AuthResponse response = (AuthResponse) connection.receiveObject();
-            if(!response.isSuccess()){
-                showError("Вы заблокированы");
+            if(response.getMessage().contains("Неверно")) {
+                NotificationUtil.showErrorNotification(notificationPane,"Неправильный логин или пароль");
                 return;
             }
-            if (response.getRole() == null) {
-                showError("Неверно введён логин или пароль");
+            if (response.getMessage().contains("заблокирован")) {
+                NotificationUtil.showErrorNotification(notificationPane,"Ваш аккаунт был заблокирован");
                 return;
             }
             Model.getInstance().setCurrentUser(new Users(response.getUser().getLogin(),response.getUser().getFirstName(),response.getUser().getLastName(),response.getUser().getEmail(),response.getUser().getWallet(),response.getUser().getLastLogin()));
@@ -69,9 +70,5 @@ public class LoginController {
                     break;
             }
         });
-    }
-    private void showError(String error) {
-        errorLabel.setVisible(true);
-        errorLabel.setText(error);
     }
 }

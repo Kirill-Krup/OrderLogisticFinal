@@ -67,15 +67,17 @@ public class CheckOrdersController {
         });
 
         activeBut.setOnAction(e -> {
-           refreshList();
+            searchField.setText("");
+            refreshList();
             othersBut.setStyle("-fx-background-color: transparent;");
             activeBut.setStyle("-fx-background-color: green;");
         });
 
         othersBut.setOnAction(e -> {
-           refreshOthersList();
-           othersBut.setStyle("-fx-background-color: green;");
-           activeBut.setStyle("-fx-background-color: transparent;");
+            searchField.setText("");
+            refreshOthersList();
+            othersBut.setStyle("-fx-background-color: green;");
+            activeBut.setStyle("-fx-background-color: transparent;");
         });
         setupSearch();
         firstDate.valueProperty().addListener((observable, oldValue, newValue) -> {

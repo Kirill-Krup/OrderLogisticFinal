@@ -8,8 +8,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="800.0" prefWidth="1000.0" stylesheets="@../../Styles/EditUsers.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.Admin.EditUsersController">
    <children>
@@ -50,7 +50,6 @@
                </font>
             </Button>
             <TextField fx:id="findUserField" layoutX="436.0" layoutY="40.0" prefHeight="31.0" prefWidth="234.0" promptText="Поиск пользователя по логину" />
-            <Text fx:id="errorLabel" fill="RED" layoutX="68.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-alignment: center;" wrappingWidth="735.13671875" />
          </children>
       </Pane>
       <ImageView fitHeight="33.0" fitWidth="36.0" layoutX="18.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
@@ -59,5 +58,6 @@
          </image>
       </ImageView>
       <Button fx:id="backBut" layoutX="18.0" layoutY="5.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="36.0" styleClass="but" />
+      <StackPane fx:id="notificationPane" layoutX="224.0" layoutY="1.0" prefHeight="60.0" prefWidth="523.0" stylesheets="@../../Styles/StyleForNotification.css" />
    </children>
 </AnchorPane>

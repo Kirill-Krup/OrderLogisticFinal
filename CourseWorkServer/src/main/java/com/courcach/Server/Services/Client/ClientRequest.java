@@ -13,6 +13,7 @@ public class ClientRequest implements Serializable {
     private Users user;
     private int orderNumber;
     private ReportModel report;
+    private double wallet;
 
     public ClientRequest(String request) {
         this.request = request;
@@ -45,10 +46,17 @@ public class ClientRequest implements Serializable {
         this.report = report;
     }
 
+    public ClientRequest(String request,Users user,Double wallet) {
+        this.request = request;
+        this.user = user;
+        this.wallet = wallet;
+    }
+
     public String getRequest() {return request;}
     public Float getSum() {return sum;}
     public Orders getOrder() {return order;}
     public Users getUser() {return user;}
     public int getOrderNumber() {return orderNumber;}
     public ReportModel getReport() {return report;}
+    public double getWallet() {return wallet;}
 }

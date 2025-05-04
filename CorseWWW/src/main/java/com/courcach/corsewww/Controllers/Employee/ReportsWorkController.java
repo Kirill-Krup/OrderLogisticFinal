@@ -71,6 +71,7 @@ public class ReportsWorkController {
             noAnswerReportsBut.setStyle(noAnswerReportsBut.getStyle() + "-fx-background-color: transparent;-fx-text-fill: #d4ffb2;");
             answerField.setText("");
             answerField.setPromptText("Выберите отзыв и вы увидите ответ сотрудика, если такой есть");
+            sendAnswerBut.setVisible(false);
             refreshAllReports();
         });
 
@@ -79,6 +80,7 @@ public class ReportsWorkController {
             noAnswerReportsBut.setStyle(noAnswerReportsBut.getStyle() + "-fx-background-color: green;-fx-text-fill: white;");
             answerField.setText("");
             answerField.setPromptText("Введите ответ пользователю");
+            sendAnswerBut.setVisible(true);
             refreshNotAnswered();
         });
 
@@ -176,7 +178,10 @@ public class ReportsWorkController {
         for (ReportModel reportModel : allReports) {
             rating = rating + reportModel.getStars();
         }
-        rating = rating / allReports.size();
-        ratingLabel.setText(rating + " ★");
+        if(!allReports.isEmpty()){
+            rating = rating / allReports.size();
+            ratingLabel.setText(rating + " ★");
+        }
+
     }
 }

@@ -71,6 +71,12 @@ public class CheckMyOrderController {
     @FXML
     private StackPane notificationPane;
 
+    @FXML
+    private Button checkMyOrder;
+
+    @FXML
+    private Button reportsBut;
+
     public void initialize() {
         initial();
         connection.sendObject(new ClientRequest("giveMeMyActiveOrders",Model.getInstance().getCurrentUser()));
@@ -98,12 +104,11 @@ public class CheckMyOrderController {
 
     private void initial(){
         menuBox.setMouseTransparent(true);
-        MyWallet.setText(String.valueOf(Model.getInstance().getCurrentUser().getWallet()));
         menuBut.setOnAction(e -> {
+            MyWallet.setText(String.valueOf(Model.getInstance().getCurrentUser().getWallet()));
             menuBox.setOpacity(1);
             topPane.setStyle("-fx-background-color: rgba(0,0,0,0.8)");
             mainPane.setStyle("-fx-background-color: rgba(0,0,0,0.8)");
-            mainPane.setMouseTransparent(false);
             menuBox.setMouseTransparent(false);
         });
 
@@ -112,6 +117,18 @@ public class CheckMyOrderController {
             Stage stage = (Stage) addNewOrder.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(stage);
             Model.getInstance().getViewFactory().showAddNewOrderWindow();
+        });
+
+        checkMyOrder.setOnAction(event->{
+            Stage stage = (Stage) checkMyOrder.getScene().getWindow();
+            Model.getInstance().getViewFactory().closeStage(stage);
+            Model.getInstance().getViewFactory().showCheckMyOrderWindow();
+        });
+
+        checkUserHistory.setOnAction(e -> {
+            Stage stage = (Stage) checkUserHistory.getScene().getWindow();
+            Model.getInstance().getViewFactory().closeStage(stage);
+            Model.getInstance().getViewFactory().showCheckUserHistoryWindow();
         });
 
         openWallet.setOnAction(e -> {
@@ -123,7 +140,6 @@ public class CheckMyOrderController {
         backBut.setOnAction(e -> {
             menuBox.setOpacity(0);
             menuBox.setMouseTransparent(true);
-            mainPane.setMouseTransparent(true);
             topPane.setStyle("-fx-background-color: rgba(0,0,0,0.5)");
             mainPane.setStyle("-fx-background-color: transparent");
         });
@@ -133,6 +149,13 @@ public class CheckMyOrderController {
             Model.getInstance().getViewFactory().closeStage(stage);
             Model.getInstance().getViewFactory().showClientWindow();
         });
+
+        reportsBut.setOnAction(e -> {
+            Stage stage = (Stage) reportsBut.getScene().getWindow();
+            Model.getInstance().getViewFactory().closeStage(stage);
+            Model.getInstance().getViewFactory().showReportsWindow();
+        });
+
         exitBut.setOnAction(e -> {
             Model.getInstance().getConnectionToServer().sendObject(new ClientRequest("exit"));
             Stage stage = (Stage) menuBut.getScene().getWindow();
@@ -144,7 +167,9 @@ public class CheckMyOrderController {
     private void refreshList(){
         listForOrders.getItems().clear();
         for(Orders order : activeOrders){
-            addOrderCell(order);
+            if(order.getOrderStatus() != Orders.OrderStatus.ВЫПОЛНЕН && order.getOrderStatus() != Orders.OrderStatus.ОТКАЗАНО && order.getOrderStatus() != Orders.OrderStatus.ОТМЕНЁН){
+                addOrderCell(order);
+            }
         }
     }
 

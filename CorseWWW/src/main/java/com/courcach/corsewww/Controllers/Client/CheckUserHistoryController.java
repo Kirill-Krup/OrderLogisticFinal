@@ -34,10 +34,19 @@ public class CheckUserHistoryController {
     private Button checkMyOrder;
 
     @FXML
+    private Button checkUserHistory;
+
+    @FXML
     private Button exitBut;
 
     @FXML
     private Button homeText;
+
+    @FXML
+    private ListView<AnchorPane> listForHistory;
+
+    @FXML
+    private Pane mainPane;
 
     @FXML
     private VBox menuBox;
@@ -49,13 +58,10 @@ public class CheckUserHistoryController {
     private Button openWallet;
 
     @FXML
+    private Button reportsBut;
+
+    @FXML
     private HBox topPane;
-
-    @FXML
-    private ListView<AnchorPane> listForHistory;
-
-    @FXML
-    private Pane mainPane;
 
 
     public void initialize() {
@@ -89,12 +95,11 @@ public class CheckUserHistoryController {
 
     private void initial(){
         menuBox.setMouseTransparent(true);
-        MyWallet.setText(String.valueOf(Model.getInstance().getCurrentUser().getWallet()));
         menuBut.setOnAction(e -> {
+            MyWallet.setText(String.valueOf(Model.getInstance().getCurrentUser().getWallet()));
             menuBox.setOpacity(1);
             topPane.setStyle("-fx-background-color: rgba(0,0,0,0.8)");
             mainPane.setStyle("-fx-background-color: rgba(0,0,0,0.8)");
-            mainPane.setMouseTransparent(false);
             menuBox.setMouseTransparent(false);
         });
 
@@ -111,6 +116,11 @@ public class CheckUserHistoryController {
             Model.getInstance().getViewFactory().showCheckMyOrderWindow();
         });
 
+        checkUserHistory.setOnAction(e -> {
+            Stage stage = (Stage) checkUserHistory.getScene().getWindow();
+            Model.getInstance().getViewFactory().closeStage(stage);
+            Model.getInstance().getViewFactory().showCheckUserHistoryWindow();
+        });
 
         openWallet.setOnAction(e -> {
             Stage stage = (Stage) openWallet.getScene().getWindow();
@@ -123,7 +133,6 @@ public class CheckUserHistoryController {
             menuBox.setMouseTransparent(true);
             topPane.setStyle("-fx-background-color: rgba(0,0,0,0.5)");
             mainPane.setStyle("-fx-background-color: transparent");
-            mainPane.setMouseTransparent(true);
         });
 
         homeText.setOnAction(e -> {
@@ -131,6 +140,13 @@ public class CheckUserHistoryController {
             Model.getInstance().getViewFactory().closeStage(stage);
             Model.getInstance().getViewFactory().showClientWindow();
         });
+
+        reportsBut.setOnAction(e -> {
+            Stage stage = (Stage) reportsBut.getScene().getWindow();
+            Model.getInstance().getViewFactory().closeStage(stage);
+            Model.getInstance().getViewFactory().showReportsWindow();
+        });
+
         exitBut.setOnAction(e -> {
             Model.getInstance().getConnectionToServer().sendObject(new ClientRequest("exit"));
             Stage stage = (Stage) menuBut.getScene().getWindow();

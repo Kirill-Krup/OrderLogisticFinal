@@ -72,6 +72,23 @@ public class ClientHandler extends RoleHandler {
                         out.flush();
                     }
 
+                    case "giveMeNewMessages"->{
+                        boolean req = orderResponse.checkMessages(request.getUser().getLogin());
+                        out.writeObject(req);
+                        out.flush();
+                    }
+
+                    case "onlineBuy"->{
+                        orderResponse.updateWallet(request.getUser().getLogin(),request.getWallet());
+                    }
+
+                    case "checkAnswers" ->{
+                        orderResponse.checkAllUsersAnswers(request.getUser().getLogin());
+                        List<ReportModel> allSuitReports = orderResponse.getSuitReports(request.getUser().getLogin());
+                        out.writeObject(allSuitReports);
+                        out.flush();
+                    }
+
                     case "exit"->{
                         exit = true;
                     }

@@ -71,13 +71,6 @@ public class AuthService {
     }
 
     public RegResponse register(String email, String name, String surname, String login, String password) {
-        try {
-            if (userExists(login, email)) {
-                return new RegResponse(false, "Пользователь с таким логином или email уже существует");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         String regQuery = "INSERT INTO users (login, password, firstName, lastName, roleID, email, salt, isBlocked, wallet, lastLogin) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -86,6 +79,7 @@ public class AuthService {
 
             String salt = PasswordUtil.generateSalt();
             String hashPassword = PasswordUtil.hashPassword(password, salt);
+
             stmt.setString(1, login);
             stmt.setString(2, hashPassword);
             stmt.setString(3, name);
@@ -110,31 +104,22 @@ public class AuthService {
                 return new RegResponse(false, "Не удалось зарегистрировать пользователя");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("SQL Error message: " + e.getMessage());
             return handleRegistrationError(e);
         }
     }
 
-    private boolean userExists(String login, String email) throws SQLException {
-        String checkQuery = "SELECT 1 FROM users WHERE login = ? OR email = ? LIMIT 1";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(checkQuery)) {
-            stmt.setString(1, login);
-            stmt.setString(2, email);
-            try (ResultSet rs = stmt.executeQuery()) {
-                return rs.next();
-            }
-        }
-    }
-
     private RegResponse handleRegistrationError(SQLException e) {
-        if (e.getMessage().contains("Duplicate entry")) {
-            if (e.getMessage().contains("login")) {
+        String message = e.getMessage();
+        if (message.contains("Duplicate entry")) {
+            if (message.contains("users.PRIMARY")) {
                 return new RegResponse(false, "Логин уже занят");
-            } else if (e.getMessage().contains("email")) {
+            } else if (message.contains("users.email")) {
                 return new RegResponse(false, "Email уже используется");
             }
+            return new RegResponse(false, "Данные уже используются");
         }
         return new RegResponse(false, "Ошибка базы данных: " + e.getMessage());
     }
+
 }

@@ -15,6 +15,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 
 public class ClientOrdersForEmployeeController {
@@ -38,9 +42,11 @@ public class ClientOrdersForEmployeeController {
     private TextField searchField;
 
 
+
     public void initialize() {
         connection.sendObject(new EmployeeRequest("giveMeAllOrdersAndPlaces"));
         allOrders =(List<Orders>) connection.receiveObject();
+        Collections.reverse(allOrders);
         allPlaces =(List<Places>) connection.receiveObject();
         refreshListWithOrders();
 
@@ -49,6 +55,30 @@ public class ClientOrdersForEmployeeController {
             Model.getInstance().getViewFactory().closeStage(stage);
             Model.getInstance().getViewFactory().showEmployeeWindow();
         });
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {applyFilters();});
+        firstDate.valueProperty().addListener((observable, oldValue, newValue) -> {applyFilters();});
+        lastDate.valueProperty().addListener((observable, oldValue, newValue) -> {applyFilters();});
+    }
+
+    private void applyFilters() {
+        listWithOrders.getItems().clear();
+        String search = searchField.getText().trim();
+        boolean hasSearch = !search.isEmpty();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        for(Orders order : allOrders) {
+            if(hasSearch && !String.valueOf(order.getOrderNumber()).contains(search)) continue;
+            LocalDate orderDate;
+            try {
+                orderDate = LocalDate.parse(order.getDate(), formatter);
+            } catch (Exception e) {
+                e.printStackTrace();
+                continue;
+            }
+            if (firstDate.getValue() != null && orderDate.isBefore(firstDate.getValue())) continue;
+            if (lastDate.getValue() != null && orderDate.isAfter(lastDate.getValue())) continue;
+            addItem(order);
+        }
     }
 
     private void refreshListWithOrders() {
@@ -67,7 +97,7 @@ public class ClientOrdersForEmployeeController {
             e.printStackTrace();
         }
         LineOfOrderController lineOfOrderController = fxmlLoader.getController();
-        lineOfOrderController.fillAll(order.getUserLogin(),order.getTotalPrice(),order.getAddressOfDelivery(),order.getDate(),order.getOrderStatus(),order.getOrderPlaces(),allPlaces);
+        lineOfOrderController.fillAll(order.getOrderNumber(),order.getUserLogin(),order.getTotalPrice(),order.getAddressOfDelivery(),order.getDate(),order.getOrderStatus(),order.getOrderPlaces(),allPlaces);
         lineOfOrderController.setItemPane(cellForList);
         lineOfOrderController.setAdd(()->{
             connection.sendObject(new EmployeeRequest("acceptOrder",order.getOrderNumber()));

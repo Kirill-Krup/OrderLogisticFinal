@@ -63,6 +63,9 @@ public class LineOfOrderController {
     @FXML
     private ImageView galkaImg;
 
+    @FXML
+    private Label orderNumberField;
+
 
     public void initialize() {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("placeName"));
@@ -81,9 +84,10 @@ public class LineOfOrderController {
         });
     }
 
-    public void fillAll(String login, Float totalPrice, String address, String date, Orders.OrderStatus status,
+    public void fillAll(int orderNumber,String login, Float totalPrice, String address, String date, Orders.OrderStatus status,
                         List<Places> orderedPlaces, List<Places> allPlaces) {
         loginField.setText(login);
+        orderNumberField.setText("№"+orderNumber);
         addressField.setText(address);
         dateField.setText(date);
         priceField.setText(Float.toString(totalPrice));

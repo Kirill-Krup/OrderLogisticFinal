@@ -9,15 +9,16 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<DialogPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.Admin.AddNewMaterialDialogController">
+<DialogPane prefHeight="448.0" prefWidth="643.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.Admin.AddNewMaterialDialogController">
 
    <content>
-      <AnchorPane prefHeight="400.0" prefWidth="600.0">
+      <AnchorPane prefHeight="439.0" prefWidth="614.0">
          <children>
-            <ImageView fitHeight="402.0" fitWidth="605.0" layoutX="-1.0" pickOnBounds="true">
+            <ImageView fitHeight="419.0" fitWidth="609.0" layoutX="-1.0" pickOnBounds="true">
                <image>
                   <Image url="@../../Images/backClient.jpg" />
                </image>
@@ -40,6 +41,7 @@
                   <Text fx:id="errorLabel" fill="WHITE" layoutX="45.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="426.13671875" />
                </children>
             </Pane>
+            <StackPane fx:id="notificationPane" layoutX="124.0" layoutY="-3.0" prefHeight="64.0" prefWidth="364.0" stylesheets="@../../Styles/StyleForNotification.css" />
          </children>
       </AnchorPane>
    </content>

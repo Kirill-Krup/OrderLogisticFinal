@@ -2,8 +2,10 @@ package com.courcach.corsewww.Controllers.Admin;
 
 import com.courcach.Server.Services.ClassesForRequests.Places;
 import com.courcach.corsewww.Controllers.Admin.CategoryInterface.MaterialAddedCallback;
+import com.courcach.corsewww.Views.NotificationUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
 import java.util.List;
@@ -40,7 +42,7 @@ public class AddNewMaterialDialogController {
     private TextField quantityField;
 
     @FXML
-    private Text errorLabel;
+    private StackPane notificationPane;
 
 
     public void initialize() {
@@ -136,6 +138,6 @@ public class AddNewMaterialDialogController {
     }
 
     private void showError(String message){
-        errorLabel.setText(message);
+        NotificationUtil.showErrorNotification(notificationPane, message);
     }
 }

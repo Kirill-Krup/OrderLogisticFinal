@@ -118,6 +118,9 @@ public class  AddNewOrderController {
     @FXML
     private Button reportsBut;
 
+    @FXML
+    private Button checkUserHistory;
+
     public void initialize() {
         initialLists();
         ConnectionToServer connect = Model.getInstance().getConnectionToServer();
@@ -189,14 +192,17 @@ public class  AddNewOrderController {
                     return;
                 }else{
                     Model.getInstance().getCurrentUser().setWallet(Model.getInstance().getCurrentUser().getWallet()-resulPrice);
+                    MyWallet.setText(String.valueOf(Model.getInstance().getCurrentUser().getWallet()));
+                    double wallet= Model.getInstance().getCurrentUser().getWallet();
+                    connect.sendObject(new ClientRequest("onlineBuy",Model.getInstance().getCurrentUser(),wallet));
                 }
             }
             newOrder.setUserLogin(Model.getInstance().getCurrentUser().getLogin());
             newOrder.setTotalPrice(resulPrice);
             newOrder.setOrderPlaces(myOrders);
-            myOrders.clear();
             connect.sendObject(new ClientRequest("addNewOrder",newOrder));
             NotificationUtil.showNotification(notificationPane,"Заказ успешно создан");
+            myOrders.clear();
             counter.setText("0");
             refreshSum();
         });
@@ -253,6 +259,12 @@ public class  AddNewOrderController {
             Stage stage = (Stage) checkMyOrder.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(stage);
             Model.getInstance().getViewFactory().showCheckMyOrderWindow();
+        });
+
+        checkUserHistory.setOnAction(e -> {
+            Stage stage = (Stage) checkUserHistory.getScene().getWindow();
+            Model.getInstance().getViewFactory().closeStage(stage);
+            Model.getInstance().getViewFactory().showCheckUserHistoryWindow();
         });
 
         openWallet.setOnAction(e -> {

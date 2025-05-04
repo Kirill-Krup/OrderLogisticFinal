@@ -42,6 +42,24 @@ public class MyReportRowController {
         }
     }
 
+
+    public void setText(ReportModel report) {
+        this.reportModel = report;
+        numberLabel.setText("№ "+report.getOrderNumber());
+        priceLabel.setText(report.getOrder().getTotalPrice() + " BYN");
+        myReportArea.setText(report.getReportAnswer());
+        for(int i = 0;i<report.getStars();i++){
+            starsLabel.setText(starsLabel.getText() + "★");
+        }
+        if(report.getStars() == 1){
+            starsLabel.setStyle("-fx-text-fill: red");
+        }else if(report.getStars() > 1 && report.getStars() <= 3){
+            starsLabel.setStyle("-fx-text-fill: #006a00");
+        }else{
+            starsLabel.setStyle("-fx-text-fill: #cfaa00");
+        }
+    }
+
     public void setItemPane(AnchorPane itemPane) {this.itemPane = itemPane;}
 
     public ReportModel getReportModel() {return reportModel;}

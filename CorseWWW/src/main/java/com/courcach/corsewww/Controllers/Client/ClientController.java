@@ -4,10 +4,12 @@ package com.courcach.corsewww.Controllers.Client;
 import com.courcach.Server.Services.Client.ClientRequest;
 import com.courcach.corsewww.Models.ConnectionToServer;
 import com.courcach.corsewww.Models.Model;
+import com.courcach.corsewww.Views.NotificationUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -61,7 +63,16 @@ public class ClientController {
     @FXML
     private Button reportsBut;
 
+    @FXML
+    private StackPane notificationPane;
+
     public void initialize() {
+        ConnectionToServer connect = Model.getInstance().getConnectionToServer();
+        connect.sendObject(new ClientRequest("giveMeNewMessages",Model.getInstance().getCurrentUser()));
+        boolean check = (Boolean) connect.receiveObject();
+        if(check){
+            NotificationUtil.showNotification(notificationPane,"У вас есть новые непрочитанные сообщения");
+        }
         menuBox.setMouseTransparent(true);
         MyWallet.setText(String.valueOf(Model.getInstance().getCurrentUser().getWallet()));
         menuBut.setOnAction(e -> {

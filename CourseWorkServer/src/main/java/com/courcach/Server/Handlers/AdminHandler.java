@@ -6,6 +6,7 @@ import com.courcach.Server.Services.Admin.Responce.OrderResponce;
 import com.courcach.Server.Services.Admin.Responce.PlacesResponce;
 import com.courcach.Server.Services.ClassesForRequests.Orders;
 import com.courcach.Server.Services.ClassesForRequests.Places;
+import com.courcach.Server.Services.ClassesForRequests.ReportModel;
 import com.courcach.Server.Services.ClassesForRequests.Users;
 
 import java.io.IOException;
@@ -92,6 +93,12 @@ public class AdminHandler extends RoleHandler {
                     case "giveMeOrdersInDates"->{
                         List<Orders> inDates = orderService.getOrdersByDateRange(request.getFirstDate(), request.getLastDate());
                         out.writeObject(inDates);
+                        out.flush();
+                    }
+
+                    case "giveMeAllReports"->{
+                        List<ReportModel> allReports = placesService.getAllReports();
+                        out.writeObject(allReports);
                         out.flush();
                     }
 

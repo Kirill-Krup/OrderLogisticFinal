@@ -49,75 +49,61 @@ public class ClientOrderResponse {
         return places;
     }
 
-    public void updateWallet(String username, double newWallet) {
-        String query = "UPDATE users SET wallet = ? WHERE login = ?";
-
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setDouble(1, newWallet);
-            stmt.setString(2, username);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void newOrder(Orders order) {
-        String orderQuery = "INSERT INTO orders (userLogin, totalPrice, FIO,phone, DateOfOrder, " +
-                "typeOfPaymentID, typeOfDelivery, addressOfDelivery) " +
-                "VALUES (?, ?, ?,?, NOW(), ?, ?, ?)";
+        String orderQuery = "INSERT INTO orders (userLogin, totalPrice, FIO, phone, DateOfOrder, typeOfPaymentID, typeOfDelivery, addressOfDelivery) VALUES (?, ?, ?, ?, NOW(), ?, ?, ?)";
+        String detailQuery = "INSERT INTO orderdetails (orderNumber, places, quantity, price) VALUES (?, ?, ?, ?)";
 
-        String detailQuery = "INSERT INTO orderdetails (orderNumber, places, quantity, price) " +
-                "VALUES (?, ?, ?, ?)";
-
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement orderStmt = conn.prepareStatement(orderQuery, Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement detailStmt = conn.prepareStatement(detailQuery)) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
             conn.setAutoCommit(false);
-            orderStmt.setString(1, order.getUserLogin());
-            orderStmt.setBigDecimal(2, BigDecimal.valueOf(order.getTotalPrice()));
-            orderStmt.setString(3, order.getFIO());
-            orderStmt.setString(4, order.getPhone());
-            int paymentTypeId = "Онлайн".equals(order.getTypeOfPayment()) ? 1 : 2;
-            orderStmt.setInt(5, paymentTypeId);
 
-            orderStmt.setString(6, order.getTypeOfDelivery());
-            orderStmt.setString(7, order.getAddressOfDelivery());
+            try (PreparedStatement orderStmt = conn.prepareStatement(orderQuery, Statement.RETURN_GENERATED_KEYS);
+                 PreparedStatement detailStmt = conn.prepareStatement(detailQuery)) {
 
-            int affectedRows = orderStmt.executeUpdate();
-            if (affectedRows == 0) {
-                throw new SQLException("Не удалось создать заказ, нет измененных строк.");
-            }
+                orderStmt.setString(1, order.getUserLogin());
+                orderStmt.setBigDecimal(2, BigDecimal.valueOf(order.getTotalPrice()));
+                orderStmt.setString(3, order.getFIO());
+                orderStmt.setString(4, order.getPhone());
+                int paymentTypeId = "Онлайн".equals(order.getTypeOfPayment()) ? 1 : 2;
+                orderStmt.setInt(5, paymentTypeId);
+                orderStmt.setString(6, order.getTypeOfDelivery());
+                orderStmt.setString(7, order.getAddressOfDelivery());
 
-            int orderNumber;
-            try (ResultSet generatedKeys = orderStmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    orderNumber = generatedKeys.getInt(1);
-                } else {
-                    throw new SQLException("Не удалось получить ID созданного заказа.");
+                int affectedRows = orderStmt.executeUpdate();
+                if (affectedRows == 0) {
+                    throw new SQLException("Не удалось создать заказ");
                 }
-            }
 
-            for (Places place : order.getOrderPlaces()) {
-                String placeInfo = String.format("%s|%s|%s|%.2f",
-                        place.getPlaceName(),
-                        place.getDescription(),
-                        place.getCategory(),
-                        place.getPrice());
+                int orderNumber;
+                try (ResultSet generatedKeys = orderStmt.getGeneratedKeys()) {
+                    if (!generatedKeys.next()) {
+                        throw new SQLException("Не удалось получить ID заказа");
+                    }
+                    orderNumber = generatedKeys.getInt(1);
+                }
 
-                detailStmt.setInt(1, orderNumber);
-                detailStmt.setString(2, placeInfo);
-                detailStmt.setInt(3, place.getQuantity());
-                detailStmt.setBigDecimal(4, BigDecimal.valueOf(place.getPrice()));
-                detailStmt.addBatch();
+                for (Places place : order.getOrderPlaces()) {
+                    String placeInfo = String.format("%s|%s|%s|%.2f",
+                            place.getPlaceName(),
+                            place.getDescription(),
+                            place.getCategory(),
+                            place.getPrice());
+
+                    detailStmt.setInt(1, orderNumber);
+                    detailStmt.setString(2, placeInfo);
+                    detailStmt.setInt(3, place.getQuantity());
+                    detailStmt.setBigDecimal(4, BigDecimal.valueOf(place.getPrice()));
+                    detailStmt.addBatch();
+                }
+
+                detailStmt.executeBatch();
+                conn.commit();
+
+            } catch (SQLException e) {
+                conn.rollback();
+                throw new RuntimeException("Ошибка транзакции", e);
             }
-            detailStmt.executeBatch();
-            conn.commit();
-            System.out.println("Заказ успешно создан с номером: " + orderNumber);
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Ошибка при создании заказа", e);
+            throw new RuntimeException("Ошибка подключения к БД", e);
         }
     }
 
@@ -502,7 +488,68 @@ public class ClientOrderResponse {
         return ordersMap.get(orderNumber);
     }
 
+    public boolean checkMessages(String userLogin) {
+        String query = "SELECT CASE WHEN EXISTS ("
+                + "SELECT 1 FROM reports "
+                + "WHERE userLogin = ? "
+                + "AND reportAnswer IS NOT NULL "
+                + "AND isChecked = false"
+                + ") THEN 1 ELSE 0 END AS hasNewMessage";
 
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, userLogin);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("hasNewMessage") == 1;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void updateWallet(String userLogin, Double newWallet) {
+        if (userLogin == null || userLogin.isEmpty()) {
+            throw new IllegalArgumentException("Логин пользователя не может быть пустым");
+        }
+
+        if (newWallet == null || newWallet < 0) {
+            throw new IllegalArgumentException("Некорректное значение баланса");
+        }
+        String query = "UPDATE users SET wallet = ? WHERE login = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            System.out.println(newWallet);
+            stmt.setDouble(1, newWallet);
+            stmt.setString(2, userLogin);
+           stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Ошибка при обновлении баланса", e);
+        }
+    }
+
+    public void checkAllUsersAnswers(String userLogin) {
+        if (userLogin == null || userLogin.trim().isEmpty()) {
+            throw new IllegalArgumentException("Логин пользователя не может быть пустым");
+        }
+
+        String query = "UPDATE reports SET isChecked = 1 WHERE userLogin = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, userLogin.trim());
+            stmt.executeUpdate();
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Ошибка при обновлении статуса проверки для пользователя " + userLogin, e);
+        }
+    }
 
     private int getPlaceIdByName(Connection conn, String placeName) throws SQLException {
         String query = "SELECT placeID, quantity FROM places WHERE placeName = ?";

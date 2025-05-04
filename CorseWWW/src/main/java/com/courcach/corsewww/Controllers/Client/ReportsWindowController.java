@@ -55,7 +55,7 @@ public class ReportsWindowController {
     private Button exitBut;
 
     @FXML
-    private Text homeText;
+    private Button mainBut;
 
     @FXML
     private ListView<AnchorPane> listForComments;
@@ -91,10 +91,13 @@ public class ReportsWindowController {
     private Button reportsBut;
 
     @FXML
+    private Label noteText;
+
+    @FXML
     private TextField searchField;
 
     @FXML
-    private ImageView sendImage;
+    private ImageView sadImage;
 
     @FXML
     private Button sendReportBut;
@@ -104,6 +107,8 @@ public class ReportsWindowController {
 
     @FXML
     private HBox topPane;
+
+
 
 
     public void initialize() {
@@ -133,6 +138,7 @@ public class ReportsWindowController {
             else{
                 NotificationUtil.showErrorNotification(notificationPane, "Вы не выбрали ни одного заказа");
             }
+            refreshList();
         });
 
         newReportBut.setOnAction(event -> { // Кнопка для отправки нового отзыва (ЛЕВО)
@@ -143,6 +149,7 @@ public class ReportsWindowController {
             newReportBut.setStyle("-fx-background-color: green;-fx-border-radius: 10px 0px 0px 10px;-fx-background-radius: 10px 0px 0px 10px");
             myReportsBut.setStyle("-fx-background-color: transparent;");
             answersBut.setStyle("-fx-background-color: transparent;");
+            searchField.setText("");
             refreshList();
         });
 
@@ -154,6 +161,7 @@ public class ReportsWindowController {
             myReportsBut.setStyle("-fx-background-color: green;");
             answersBut.setStyle("-fx-background-color: transparent;");
             newReportBut.setStyle("-fx-background-color: transparent;");
+            searchField.setText("");
             refreshListForMyReports();
         });
 
@@ -165,6 +173,11 @@ public class ReportsWindowController {
             answersBut.setStyle("-fx-background-color: green; -fx-border-radius: 0px 10px 10px 0px;-fx-background-radius: 0px 10px 10px 0px;");
             newReportBut.setStyle("-fx-background-color: transparent;");
             myReportsBut.setStyle("-fx-background-color: transparent;");
+            connection.sendObject(new ClientRequest("checkAnswers", Model.getInstance().getCurrentUser()));
+            allSuitReports = (List<ReportModel>) connection.receiveObject();
+            searchField.setText("");
+            refreshCounter();
+            refreshlistForMyAnswers();
         });
 
         starsGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
@@ -176,6 +189,79 @@ public class ReportsWindowController {
 
         setupSettingForChoice();
 
+        searchField.textProperty().addListener((obs, oldValue, newValue) -> {
+           updateSearchResults(newValue.trim().toLowerCase());
+        });
+
+    }
+
+    private void updateSearchResults(String searchQuery) {
+        listForComments.getItems().clear();
+
+        if (newReportBut.getStyle().contains("green")) {
+            for (Orders order : allEndedOrders) {
+                boolean hasReport = allSuitReports.stream()
+                        .anyMatch(report -> report.getOrderNumber() == order.getOrderNumber());
+                if (!hasReport && orderMatchesSearch(order, searchQuery)) {
+                    addItem(order);
+                }
+            }
+            toggleSadImage("Нет заказов на которые можно оставить отзыв");
+
+        } else if (myReportsBut.getStyle().contains("green")) {
+            for (ReportModel report : allSuitReports) {
+                if (reportMatchesSearch(report, searchQuery)) {
+                    addMyReports(report);
+                }
+            }
+            toggleSadImage("Соответствий не найдено");
+
+        } else if (answersBut.getStyle().contains("green")) {
+            for (ReportModel report : allSuitReports) {
+                if (report.getReportAnswer() != null && reportMatchesSearch(report, searchQuery)) {
+                    addMyAnswers(report);
+                }
+            }
+            toggleSadImage("Соответствий не найдено");
+        }
+    }
+
+
+    private boolean orderMatchesSearch(Orders order, String query) {
+        if (query.isEmpty()) return true;
+        return String.valueOf(order.getOrderNumber()).contains(query);
+    }
+
+    private boolean reportMatchesSearch(ReportModel report, String query) {
+        if (query.isEmpty()) return true;
+        return String.valueOf(report.getOrder().getOrderNumber()).contains(query);
+    }
+
+    private void toggleSadImage(String message) {
+        if (listForComments.getItems().isEmpty()) {
+            sadImage.setVisible(true);
+            noteText.setText(message);
+            noteText.setVisible(true);
+        } else {
+            sadImage.setVisible(false);
+            noteText.setVisible(false);
+        }
+    }
+
+    private void refreshlistForMyAnswers() {
+        sadImage.setVisible(false);
+        noteText.setVisible(false);
+        listForComments.getItems().clear();
+        for(ReportModel report : allSuitReports) {
+            if(report.getReportAnswer()!=null) {
+                addMyAnswers(report);
+            }
+        }
+        if(listForComments.getItems().isEmpty()){
+            sadImage.setVisible(true);
+            noteText.setText("На ваши отзывы ещё не было ответов");
+            noteText.setVisible(true);
+        }
     }
 
     private void setupSettingForChoice() {
@@ -204,6 +290,8 @@ public class ReportsWindowController {
     }
 
     private void refreshList(){
+        sadImage.setVisible(false);
+        noteText.setVisible(false);
         listForComments.getItems().clear();
         for(Orders order : allEndedOrders){
             boolean hasReport = false;
@@ -217,6 +305,11 @@ public class ReportsWindowController {
                 addItem(order);
             }
 
+        }
+        if(listForComments.getItems().isEmpty()){
+            sadImage.setVisible(true);
+            noteText.setText("Нет заказов на которые можно оставить отзыв");
+            noteText.setVisible(true);
         }
     }
 
@@ -236,6 +329,7 @@ public class ReportsWindowController {
     }
 
     private void refreshCounter(){
+        counter = 0;
         for(ReportModel report : allSuitReports){
             if(report.getReportAnswer() != null && !report.getChecked()){
                 counter++;
@@ -246,9 +340,16 @@ public class ReportsWindowController {
 
 
     private void refreshListForMyReports(){
+        sadImage.setVisible(false);
+        noteText.setVisible(false);
         listForComments.getItems().clear();
         for(ReportModel report : allSuitReports){
             addMyReports(report);
+        }
+        if(listForComments.getItems().isEmpty()){
+            sadImage.setVisible(true);
+            noteText.setText("Вы ещё не оставляли отзывы");
+            noteText.setVisible(true);
         }
     }
 
@@ -262,6 +363,21 @@ public class ReportsWindowController {
         }
         MyReportRowController controller = fxmlLoader.getController();
         controller.setTexts(report);
+        controller.setItemPane(cellForOrder);
+        cellForOrder.getProperties().put("controller", controller);
+        listForComments.getItems().add(cellForOrder);
+    }
+
+    private void addMyAnswers(ReportModel report){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Client/myReportRow.fxml"));
+        AnchorPane cellForOrder;
+        try {
+            cellForOrder = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        MyReportRowController controller = fxmlLoader.getController();
+        controller.setText(report);
         controller.setItemPane(cellForOrder);
         cellForOrder.getProperties().put("controller", controller);
         listForComments.getItems().add(cellForOrder);
@@ -307,6 +423,12 @@ public class ReportsWindowController {
             Stage stage = (Stage) reportsBut.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(stage);
             Model.getInstance().getViewFactory().showReportsWindow();
+        });
+
+        mainBut.setOnAction(e -> {
+            Stage stage = (Stage) mainBut.getScene().getWindow();
+            Model.getInstance().getViewFactory().closeStage(stage);
+            Model.getInstance().getViewFactory().showClientWindow();
         });
 
         backBut.setOnAction(e -> {
