@@ -1,0 +1,46 @@
+AnchorPane {
+    -fx-background-color: linear-gradient(to bottom, #3b3b3b, #1e1e1e);
+}
+
+.topMenu {
+    -fx-background-color: linear-gradient(to right, rgba(10,10,10,0.95), rgba(50,50,50,0.85));
+}
+
+Text {
+    -fx-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+TextField {
+    -fx-background-color: rgba(255, 255, 255, 0.9);
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 10;
+    -fx-padding: 8;
+}
+
+#ReplenishmnetOfWalletBut {
+    -fx-background-color: #90a955;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 10;
+    -fx-padding: 10;
+    -fx-cursor: hand;
+}
+
+#ReplenishmnetOfWalletBut:hover {
+    -fx-background-color: #5f772f;
+}
+
+Button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+Button:hover {
+    -fx-text-fill: #ff4d4d;
+    -fx-font-weight: bold;
+}

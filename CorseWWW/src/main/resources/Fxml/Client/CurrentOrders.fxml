@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="112.0" prefWidth="890.0" stylesheets="@../../Styles/CurrentOrders.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.Client.CurrentOrdersController">
+<AnchorPane prefHeight="112.0" prefWidth="890.0" stylesheets="@../../Styles/ClientStyles/CurrentOrders.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.Client.CurrentOrdersController">
    <children>
       <Line fx:id="statusLine" endX="-59.16668701171875" endY="84.0" layoutX="81.0" layoutY="14.0" startX="-59.16667175292969" startY="-4.6666669845581055" strokeWidth="5.0" />
       <Label fx:id="orderNumber" layoutX="32.0" layoutY="7.0" prefHeight="54.0" prefWidth="131.0">

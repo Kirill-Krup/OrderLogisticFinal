@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<DialogPane prefHeight="520.0" prefWidth="680.0" stylesheets="@../../Styles/RegistrationDialogPane.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.Admin.EditPlaceDialogPaneController">
+<DialogPane prefHeight="520.0" prefWidth="680.0" stylesheets="@../../Styles/AdminStyles/EditPlaceDialogPane.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.Admin.EditPlaceDialogPaneController">
 
    <content>
       <VBox alignment="TOP_CENTER" prefHeight="451.0" prefWidth="680.0" spacing="20" styleClass="edit-container">

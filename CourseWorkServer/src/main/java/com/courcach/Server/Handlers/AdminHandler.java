@@ -4,10 +4,8 @@ import com.courcach.Server.Services.Admin.AdminRequest;
 import com.courcach.Server.Services.Admin.Responce.AllUsersResponce;
 import com.courcach.Server.Services.Admin.Responce.OrderResponce;
 import com.courcach.Server.Services.Admin.Responce.PlacesResponce;
-import com.courcach.Server.Services.ClassesForRequests.Orders;
-import com.courcach.Server.Services.ClassesForRequests.Places;
-import com.courcach.Server.Services.ClassesForRequests.ReportModel;
-import com.courcach.Server.Services.ClassesForRequests.Users;
+import com.courcach.Server.Services.ClassesForRequests.*;
+import com.courcach.Server.Services.LogService;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -28,6 +26,7 @@ public class AdminHandler extends RoleHandler {
                 AllUsersResponce service = new AllUsersResponce();
                 PlacesResponce placesService = new PlacesResponce();
                 OrderResponce orderService = new OrderResponce();
+                LogService logService = new LogService();
                 switch (request.getRequest()) {
                     // USERS
                     case "takeAllUsers"->{
@@ -37,9 +36,11 @@ public class AdminHandler extends RoleHandler {
                     }
                     case "blockUser"->{
                         service.blockUser(request.getUser().getLogin());
+                        logService.addLog(new Log(request.getAdminLogin(), "Блокировка пользователя " + request.getUser().getLogin()));
                     }
                     case "unlockUser"->{
                         service.unlockUser(request.getUser().getLogin());
+                        logService.addLog(new Log(request.getAdminLogin(), "Разблокировка пользователя " + request.getUser().getLogin()));
                     }
                     case "delUser"->{
                         service.delUser(request.getUser().getLogin());

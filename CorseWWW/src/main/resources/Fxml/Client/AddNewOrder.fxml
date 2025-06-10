@@ -224,7 +224,7 @@
       <Pane fx:id="paneForBlackCart" layoutY="-1.0" mouseTransparent="true" prefHeight="822.0" prefWidth="578.0" />
    </children>
    <stylesheets>
-      <URL value="@../../Styles/AddNewOrder.css" />
-      <URL value="@../../Styles/Client.css" />
+      <URL value="@../../Styles/ClientStyles/AddNewOrder.css" />
+      <URL value="@../../Styles/ClientStyles/Client.css" />
    </stylesheets>
 </AnchorPane>

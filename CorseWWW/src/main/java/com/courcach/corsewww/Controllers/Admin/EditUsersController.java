@@ -76,7 +76,7 @@ public class EditUsersController {
         blockUserBut.setOnAction(e -> {
             Users selectedUser = (Users) listOfUsers.getSelectionModel().getSelectedItem();
             if(selectedUser != null) {
-                connection.sendObject(new AdminRequest("blockUser",selectedUser));
+                connection.sendObject(new AdminRequest("blockUser",selectedUser, Model.getInstance().getCurrentUser().getLogin()));
                 selectedUser.setIsBlocked(true);
                 updateInfo(filteredUsers);
             } else {
@@ -87,7 +87,7 @@ public class EditUsersController {
         unlockUserBut.setOnAction(e -> {
             Users selectedUser = (Users) listOfUsers.getSelectionModel().getSelectedItem();
             if(selectedUser != null) {
-                connection.sendObject(new AdminRequest("unlockUser",selectedUser));
+                connection.sendObject(new AdminRequest("unlockUser",selectedUser, Model.getInstance().getCurrentUser().getLogin()));
                 selectedUser.setIsBlocked(false);
                 updateInfo(filteredUsers);
             } else {

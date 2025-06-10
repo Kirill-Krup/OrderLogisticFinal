@@ -18,23 +18,20 @@
 <AnchorPane prefHeight="468.0" prefWidth="535.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.Client.ReplenishmnetOfWalletController">
    <children>
       <ImageView fitHeight="816.0" fitWidth="1021.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" />
-      <Text layoutX="393.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пополнение кошелька" wrappingWidth="218.63592529296875">
+      <Text layoutX="358.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 28px;" text="Пополнение кошелька" wrappingWidth="334.7763671875">
          <font>
-            <Font size="20.0" />
+            <Font size="31.0" />
          </font>
       </Text>
-      <TextField fx:id="cardNumber" layoutX="432.0" layoutY="277.0" promptText="**** **** **** ****" />
-      <TextField fx:id="validityPeriod" layoutX="432.0" layoutY="409.0" promptText="01//25" />
-      <TextField fx:id="cvvCode" layoutX="432.0" layoutY="474.0" promptText="***" />
-      <Text layoutX="432.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите номер карты" />
-      <Text layoutX="432.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите держателя карты" />
-      <Text layoutX="432.0" layoutY="461.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите cvv код" />
-      <Text layoutX="432.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите срок действия карты" />
-      <TextField fx:id="cardUser" layoutX="432.0" layoutY="344.0" promptText="IVANOV IVAN" />
-      <Text layoutX="436.0" layoutY="522.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Размер пополнения" />
-      <TextField fx:id="sum" layoutX="432.0" layoutY="534.0" prefHeight="26.0" prefWidth="173.0" promptText="Введите сумму пополнения" />
-      <Button fx:id="ReplenishmnetOfWalletBut" layoutX="429.0" layoutY="600.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="162.0" style="-fx-background-color: #90a955; -fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="but" text="Пополнить кошелёк" />
-      <Pane fx:id="mainPane" layoutX="306.0" layoutY="61.0" mouseTransparent="true" prefHeight="771.0" prefWidth="722.0" />
+      <TextField fx:id="cardNumber" layoutX="383.0" layoutY="268.0" prefHeight="35.0" prefWidth="232.0" promptText="**** **** **** ****" />
+      <TextField fx:id="cvvCode" layoutX="383.0" layoutY="515.0" prefHeight="35.0" prefWidth="232.0" promptText="***" />
+      <Text layoutX="383.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите номер карты" />
+      <Text layoutX="383.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите держателя карты" />
+      <Text layoutX="383.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите cvv код" />
+      <TextField fx:id="cardUser" layoutX="383.0" layoutY="344.0" prefHeight="35.0" prefWidth="232.0" promptText="IVANOV IVAN" />
+      <Text layoutX="383.0" layoutY="591.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Размер пополнения" />
+      <Button fx:id="ReplenishmnetOfWalletBut" layoutX="366.0" layoutY="670.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="273.0" style="-fx-background-color: #90a955; -fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="but" text="Пополнить кошелёк" />
+      <Pane fx:id="mainPane" layoutX="308.0" layoutY="61.0" mouseTransparent="true" prefHeight="771.0" prefWidth="720.0" />
       <HBox fx:id="topPane" alignment="CENTER_LEFT" layoutX="-1.0" layoutY="-2.0" prefHeight="64.0" prefWidth="1028.0" styleClass="topMenu">
          <children>
             <Pane prefHeight="64.0" prefWidth="1029.0">
@@ -124,9 +121,12 @@
             </Pane>
          </children>
       </VBox>
+      <Text layoutX="383.0" layoutY="423.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите срок действия карты" />
+      <TextField fx:id="validityPeriod" layoutX="383.0" layoutY="428.0" prefHeight="35.0" prefWidth="232.0" promptText="01//25" />
+      <TextField fx:id="sum" layoutX="383.0" layoutY="596.0" prefHeight="35.0" prefWidth="232.0" promptText="Введите сумму пополнения" />
    </children>
    <stylesheets>
-      <URL value="@../../Styles/Client.css" />
-      <URL value="@../../Styles/ButtonHoverSettings.css" />
+      <URL value="@../../Styles/ClientStyles/Client.css" />
+      <URL value="@../../Styles/ClientStyles/ReplenishmentWallet.css" />
    </stylesheets>
 </AnchorPane>

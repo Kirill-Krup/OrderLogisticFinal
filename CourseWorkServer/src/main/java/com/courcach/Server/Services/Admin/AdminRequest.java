@@ -18,6 +18,7 @@ public class AdminRequest implements Serializable {
     private LocalDate firstDate;
     private LocalDate lastDate;
     private ReportModel report;
+    private String adminLogin;
 
     public AdminRequest(String request) {
         this.request = request;
@@ -55,9 +56,10 @@ public class AdminRequest implements Serializable {
         this.lastDate = lastDate;
     }
 
-    public AdminRequest(String request, ReportModel report){
+    public AdminRequest(String request, Users user, String adminLogin ){
         this.request = request;
-        this.report = report;
+        this.user = user;
+        this.adminLogin = adminLogin;
     }
 
     public String getRequest() {return request;}
@@ -69,4 +71,5 @@ public class AdminRequest implements Serializable {
     public LocalDate getFirstDate() {return firstDate;}
     public LocalDate getLastDate() {return lastDate;}
     public ReportModel getReport() {return report;}
+    public String getAdminLogin() {return adminLogin;}
 }

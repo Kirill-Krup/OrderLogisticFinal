@@ -1,0 +1,15 @@
+.back-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.back-button:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8,0,0,1);
+}
+
+.comments-table {
+    -fx-background-color: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(230, 230, 230, 0.9));
+    -fx-border-radius: 10;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5,0,0,1);
+}
