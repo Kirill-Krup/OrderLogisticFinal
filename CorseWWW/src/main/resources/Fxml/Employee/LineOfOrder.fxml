@@ -48,5 +48,6 @@
             <Font size="30.0" />
          </font>
       </Label>
+      <Label fx:id="typeOfPaymentLabel" alignment="CENTER" layoutX="762.0" layoutY="87.0" prefHeight="17.0" prefWidth="96.0" />
    </children>
 </AnchorPane>

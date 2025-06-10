@@ -155,16 +155,16 @@ public class  AddNewOrderController {
         });
 
         formOrder.setOnAction(event -> {
-            if(fio.getText().isEmpty()) {
-                NotificationUtil.showErrorNotification( notificationPane,"Введите ФИО");
+            if(fio.getText().isEmpty() || !fio.getText().matches("^[\\p{L}]{2,}(?: [\\p{L}]{2,}){2}$")) {
+                NotificationUtil.showErrorNotification(notificationPane, "Введите корректное ФИО (только буквы, минимум 3 слова)");
                 return;
-            }else{
+            } else {
                 newOrder.setFIO(fio.getText());
             }
-            if(phone.getText().isEmpty()) {
-                NotificationUtil.showErrorNotification( notificationPane,"Введите телефон");
+            if(phone.getText().isEmpty() || !phone.getText().matches("^\\+\\d{12}$")) {
+                NotificationUtil.showErrorNotification(notificationPane, "Введите телефон в формате +XXXXXXXXXXXX (12 цифр после +)");
                 return;
-            }else{
+            } else {
                 newOrder.setPhone(phone.getText());
             }
             if (typeOfPaintment.getValue().isEmpty()) {

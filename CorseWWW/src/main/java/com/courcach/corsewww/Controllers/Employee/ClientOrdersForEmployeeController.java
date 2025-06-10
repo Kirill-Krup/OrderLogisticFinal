@@ -5,6 +5,7 @@ import com.courcach.Server.Services.ClassesForRequests.Places;
 import com.courcach.Server.Services.Employee.EmployeeRequest;
 import com.courcach.corsewww.Models.ConnectionToServer;
 import com.courcach.corsewww.Models.Model;
+import com.courcach.corsewww.Views.NotificationUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -12,6 +13,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -41,12 +43,14 @@ public class ClientOrdersForEmployeeController {
     @FXML
     private TextField searchField;
 
+    @FXML
+    private StackPane notificationPane;
+
 
 
     public void initialize() {
         connection.sendObject(new EmployeeRequest("giveMeAllOrdersAndPlaces"));
         allOrders =(List<Orders>) connection.receiveObject();
-        Collections.reverse(allOrders);
         allPlaces =(List<Places>) connection.receiveObject();
         refreshListWithOrders();
 
@@ -83,6 +87,7 @@ public class ClientOrdersForEmployeeController {
 
     private void refreshListWithOrders() {
         listWithOrders.getItems().clear();
+        sortFunc();
         for (Orders order : allOrders) {
             addItem(order);
         }
@@ -97,7 +102,7 @@ public class ClientOrdersForEmployeeController {
             e.printStackTrace();
         }
         LineOfOrderController lineOfOrderController = fxmlLoader.getController();
-        lineOfOrderController.fillAll(order.getOrderNumber(),order.getUserLogin(),order.getTotalPrice(),order.getAddressOfDelivery(),order.getDate(),order.getOrderStatus(),order.getOrderPlaces(),allPlaces);
+        lineOfOrderController.fillAll(order.getOrderNumber(),order.getTypeOfPayment(),order.getUserLogin(),order.getTotalPrice(),order.getAddressOfDelivery(),order.getDate(),order.getOrderStatus(),order.getOrderPlaces(),allPlaces);
         lineOfOrderController.setItemPane(cellForList);
         lineOfOrderController.setAdd(()->{
             connection.sendObject(new EmployeeRequest("acceptOrder",order.getOrderNumber()));
@@ -107,9 +112,21 @@ public class ClientOrdersForEmployeeController {
         });
         lineOfOrderController.setRefusal(()->{
             connection.sendObject(new EmployeeRequest("refusalOrder",order.getOrderNumber()));
+            if(order.getTypeOfPayment().equals("Онлайн")){
+                NotificationUtil.showNotification(notificationPane,"Отказано в заказе, деньги возвращены клиенту");
+            }else{
+                NotificationUtil.showNotification(notificationPane,"Отказано в заказе № "+ order.getOrderNumber());
+            }
             order.setOrderStatus(Orders.OrderStatus.ОТКАЗАНО);
             refreshListWithOrders();
         });
         listWithOrders.getItems().add(cellForList);
+    }
+    private void sortFunc(){
+        Collections.sort(allOrders,(o1,o2)->{
+            if(o1.getOrderStatus() == Orders.OrderStatus.НОВЫЙ && o2.getOrderStatus() != Orders.OrderStatus.НОВЫЙ){return -1;}
+            else if (o1.getOrderStatus() != Orders.OrderStatus.НОВЫЙ && o2.getOrderStatus() == Orders.OrderStatus.НОВЫЙ) {return 1;}
+            return 0;
+        });
     }
 }

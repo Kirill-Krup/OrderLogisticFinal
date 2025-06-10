@@ -131,6 +131,7 @@ public class ReportsWindowController {
                 String request = connection.receiveObject().toString();
                 if(request.contains("успешно")){
                     NotificationUtil.showNotification(notificationPane, request);
+                    refreshList();
                 } else{NotificationUtil.showErrorNotification(notificationPane, request);}
             } else if(rating == 0) {
                 NotificationUtil.showErrorNotification(notificationPane,"Вы не указали рейтинг");
@@ -138,7 +139,6 @@ public class ReportsWindowController {
             else{
                 NotificationUtil.showErrorNotification(notificationPane, "Вы не выбрали ни одного заказа");
             }
-            refreshList();
         });
 
         newReportBut.setOnAction(event -> { // Кнопка для отправки нового отзыва (ЛЕВО)

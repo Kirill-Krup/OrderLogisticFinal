@@ -2,6 +2,7 @@ package com.courcach.corsewww.Views;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -44,7 +45,6 @@ public class ViewFactory {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Admin/Marks.fxml"));
         createStage(fxmlLoader);
     }
-
 
     // Client section
     public  void showClientWindow() {
@@ -93,7 +93,7 @@ public class ViewFactory {
         createStage(fxmlLoader);
     }
 
-    // Methods for open and close stages
+
     private void createStage(FXMLLoader fxmlLoader) {
         Scene scene = null;
         try {
@@ -105,6 +105,7 @@ public class ViewFactory {
         stage.setScene(scene);
         stage.resizableProperty().setValue(Boolean.FALSE);
         stage.setTitle("LogisticOrder");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/logo.png")));
         stage.show();
     }
 

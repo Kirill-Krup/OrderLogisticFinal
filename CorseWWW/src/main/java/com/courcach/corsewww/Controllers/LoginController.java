@@ -13,8 +13,9 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class LoginController {
+
     @FXML
-    private Button signUpBut;
+    private Button signUpTab;
 
     @FXML
     private Button enterBut;
@@ -31,8 +32,8 @@ public class LoginController {
 
 
     public void initialize() {
-        signUpBut.setOnAction(e -> {
-            Stage stage = (Stage) signUpBut.getScene().getWindow();
+        signUpTab.setOnAction(e -> {
+            Stage stage = (Stage) signUpTab.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(stage);
             Model.getInstance().getViewFactory().showRegistrationWindow();
         });

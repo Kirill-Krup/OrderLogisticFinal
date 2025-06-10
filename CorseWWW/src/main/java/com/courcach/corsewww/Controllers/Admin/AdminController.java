@@ -3,6 +3,7 @@ package com.courcach.corsewww.Controllers.Admin;
 import com.courcach.Server.Services.Admin.AdminRequest;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import com.courcach.corsewww.Models.Model;
 
@@ -23,7 +24,11 @@ public class AdminController {
     @FXML
     private Button exitBut;
 
+    @FXML
+    private Text textName;
+
     public void initialize() {
+        textName.setText(Model.getInstance().getCurrentUser().getLogin());
         checkOrdersBut.setOnAction((event) -> {
             Stage stage = (Stage) checkOrdersBut.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(stage);

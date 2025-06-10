@@ -15,43 +15,26 @@
             <Image url="@../../Images/backClient.jpg" />
          </image>
       </ImageView>
+
       <Pane layoutX="291.0" layoutY="27.0" prefHeight="746.0" prefWidth="423.0" styleClass="menuPane">
          <children>
-            <Button fx:id="checkOrdersBut" layoutX="107.0" layoutY="144.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="209.0" styleClass="menuPane" text="Просмотреть заказы" textFill="WHITE">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button fx:id="editUsersBut" layoutX="103.0" layoutY="262.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="221.0" styleClass="menuPane" text="Работа с пользователями" textFill="WHITE">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button fx:id="placesBut" layoutX="97.0" layoutY="202.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="232.0" styleClass="menuPane" text="Работа с товарами" textFill="WHITE">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button fx:id="marksBut" layoutX="107.0" layoutY="328.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="209.0" styleClass="menuPane" text="Работа с отзывами" textFill="WHITE">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button fx:id="exitBut" layoutX="168.0" layoutY="548.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="87.0" styleClass="menuPane" text="Выйти" textFill="WHITE">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
             <Text fill="WHITE" layoutX="18.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Добро пожаловать, ">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="185.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="221.0">
+            <Text fx:id="textName" fill="WHITE" layoutX="185.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="221.0">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
+
+            <Button fx:id="checkOrdersBut" layoutX="107.0" layoutY="144.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="209.0" styleClass="menuPane" text="Просмотреть заказы" textFill="WHITE" />
+            <Button fx:id="placesBut" layoutX="97.0" layoutY="202.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="232.0" styleClass="menuPane" text="Работа с товарами" textFill="WHITE" />
+            <Button fx:id="editUsersBut" layoutX="72.0" layoutY="262.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="283.0" styleClass="menuPane" text="Работа с пользователями" textFill="WHITE" />
+            <Button fx:id="marksBut" layoutX="107.0" layoutY="328.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="209.0" styleClass="menuPane" text="Работа с отзывами" textFill="WHITE" />
+
+            <Button fx:id="exitBut" layoutX="168.0" layoutY="548.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="120.0" styleClass="menuPane" text="Выйти" textFill="WHITE" />
          </children>
       </Pane>
    </children>

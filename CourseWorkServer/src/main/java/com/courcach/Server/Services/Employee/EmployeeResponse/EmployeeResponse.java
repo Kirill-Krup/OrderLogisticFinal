@@ -207,23 +207,77 @@ public class EmployeeResponse {
     }
 
     public void refuseOrder(int orderNumber) {
-        String query = "UPDATE orders SET status = 'ОТКАЗАНО' WHERE orderNumber = ?";
+        String getOrderQuery = "SELECT o.userLogin, o.totalPrice, p.type " +
+                "FROM orders o " +
+                "JOIN typeofpayment p ON o.typeOfPaymentID = p.typeOfPaymentID " +
+                "WHERE o.orderNumber = ?";
+
+        String updateOrderQuery = "UPDATE orders SET status = 'ОТКАЗАНО' WHERE orderNumber = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+             PreparedStatement getStmt = conn.prepareStatement(getOrderQuery);
+             PreparedStatement updateStmt = conn.prepareStatement(updateOrderQuery)) {
 
-            stmt.setInt(1, orderNumber);
-            int affectedRows = stmt.executeUpdate();
+            getStmt.setInt(1, orderNumber);
+            ResultSet rs = getStmt.executeQuery();
+
+            if (!rs.next()) {
+                System.out.println("Заказ с номером " + orderNumber + " не найден");
+                return;
+            }
+
+            String userLogin = rs.getString("userLogin");
+            String paymentType = rs.getString("type");
+            double orderSum = rs.getDouble("totalPrice");
+
+            updateStmt.setInt(1, orderNumber);
+            int affectedRows = updateStmt.executeUpdate();
 
             if (affectedRows == 0) {
-                System.out.println("Заказ с номером " + orderNumber + " не найден");
+                System.out.println("Не удалось обновить статус заказа №" + orderNumber);
+                return;
+            }
+
+            if ("Онлайн".equalsIgnoreCase(paymentType)) {
+                String getWalletQuery = "SELECT wallet FROM users WHERE login = ?";
+                try (PreparedStatement walletStmt = conn.prepareStatement(getWalletQuery)) {
+                    walletStmt.setString(1, userLogin);
+                    ResultSet walletRs = walletStmt.executeQuery();
+
+                    if (walletRs.next()) {
+                        double currentWallet = walletRs.getDouble("wallet");
+                        double newWallet = currentWallet + orderSum;
+                        updateWallet(userLogin, newWallet);
+                        System.out.println("Заказ №" + orderNumber + " отклонен. Средства в размере " +
+                                orderSum + " возвращены на счет пользователя");
+                    }
+                }
             } else {
-                System.out.println("Заказ №" + orderNumber + " отклонен");
+                System.out.println("Заказ №" + orderNumber + " отклонен (оплата: " + paymentType + ")");
             }
 
         } catch (SQLException e) {
             System.err.println("Ошибка при отклонении заказа:");
             e.printStackTrace();
+        }
+    }
+    private void updateWallet(String userLogin, Double newWallet) {
+        if (userLogin == null || userLogin.isEmpty()) {
+            throw new IllegalArgumentException("Логин пользователя не может быть пустым");
+        }
+
+        if (newWallet == null || newWallet < 0) {
+            throw new IllegalArgumentException("Некорректное значение баланса");
+        }
+        String query = "UPDATE users SET wallet = ? WHERE login = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            System.out.println(newWallet);
+            stmt.setDouble(1, newWallet);
+            stmt.setString(2, userLogin);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Ошибка при обновлении баланса", e);
         }
     }
 

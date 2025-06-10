@@ -44,8 +44,6 @@ public class RegistrationController {
     @FXML
     private Button signInBut;
 
-
-
     public void initialize() {
         signInBut.setOnAction(e -> {
             Stage stage = (Stage) signInBut.getScene().getWindow();
@@ -76,7 +74,7 @@ public class RegistrationController {
                 return;
             }
             if(password.length() < 8 || password.length() > 20) {
-                NotificationUtil.showErrorNotification(notificationPane,"Пароль не может быть меня 8 символов");
+                NotificationUtil.showErrorNotification(notificationPane,"Пароль не может быть менее 8 символов");
                 return;
             }
             ConnectionToServer connection = Model.getInstance().getConnectionToServer();
