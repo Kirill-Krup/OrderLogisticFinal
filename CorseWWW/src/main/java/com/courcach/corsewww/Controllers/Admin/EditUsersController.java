@@ -98,7 +98,7 @@ public class EditUsersController {
         delUserBut.setOnAction(e -> {
            Users selectedUser = (Users) listOfUsers.getSelectionModel().getSelectedItem();
            if(selectedUser != null) {
-               connection.sendObject(new AdminRequest("delUser",selectedUser));
+               connection.sendObject(new AdminRequest("delUser",selectedUser,Model.getInstance().getCurrentUser().getLogin()));
                filteredUsers.remove(selectedUser);
                updateInfo(filteredUsers);
            }else {
@@ -109,7 +109,7 @@ public class EditUsersController {
         giveEmployeeStatusBut.setOnAction(e -> {
             Users selectedUser = (Users) listOfUsers.getSelectionModel().getSelectedItem();
             if(selectedUser != null) {
-                connection.sendObject(new AdminRequest("giveEmployeeStatus",selectedUser));
+                connection.sendObject(new AdminRequest("giveEmployeeStatus",selectedUser,Model.getInstance().getCurrentUser().getLogin()));
                 selectedUser.setRole("employee");
                 updateInfo(filteredUsers);
             }else {

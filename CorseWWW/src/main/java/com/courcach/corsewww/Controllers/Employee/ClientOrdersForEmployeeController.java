@@ -105,13 +105,13 @@ public class ClientOrdersForEmployeeController {
         lineOfOrderController.fillAll(order.getOrderNumber(),order.getTypeOfPayment(),order.getUserLogin(),order.getTotalPrice(),order.getAddressOfDelivery(),order.getDate(),order.getOrderStatus(),order.getOrderPlaces(),allPlaces);
         lineOfOrderController.setItemPane(cellForList);
         lineOfOrderController.setAdd(()->{
-            connection.sendObject(new EmployeeRequest("acceptOrder",order.getOrderNumber()));
+            connection.sendObject(new EmployeeRequest("acceptOrder",order.getOrderNumber(),Model.getInstance().getCurrentUser().getLogin()));
             allPlaces =(List<Places>) connection.receiveObject();
             order.setOrderStatus(Orders.OrderStatus.ПРИНЯТ);
             refreshListWithOrders();
         });
         lineOfOrderController.setRefusal(()->{
-            connection.sendObject(new EmployeeRequest("refusalOrder",order.getOrderNumber()));
+            connection.sendObject(new EmployeeRequest("refusalOrder",order.getOrderNumber(),Model.getInstance().getCurrentUser().getLogin()));
             if(order.getTypeOfPayment().equals("Онлайн")){
                 NotificationUtil.showNotification(notificationPane,"Отказано в заказе, деньги возвращены клиенту");
             }else{

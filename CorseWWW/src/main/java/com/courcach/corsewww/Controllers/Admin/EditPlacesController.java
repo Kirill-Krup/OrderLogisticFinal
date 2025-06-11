@@ -80,7 +80,7 @@ public class EditPlacesController {
         delMaterial.setOnAction(event -> {
             Places place = filteredPlaces.get(placesTable.getSelectionModel().getSelectedIndex());
             if (place != null) {
-                connection.sendObject(new AdminRequest("delPlace",place));
+                connection.sendObject(new AdminRequest("delPlace",place,Model.getInstance().getCurrentUser().getLogin()));
                 filteredPlaces.remove(place);
                 updateInfo(filteredPlaces);
             }else {
@@ -124,7 +124,7 @@ public class EditPlacesController {
                            NotificationUtil.showErrorNotification(notificationPane,"Такой товар уже существует");
                            return;
                        }
-                        connection.sendObject(new AdminRequest("addPlace", newPlace));
+                        connection.sendObject(new AdminRequest("addPlace", newPlace,Model.getInstance().getCurrentUser().getLogin()));
                         allPlaces.add(newPlace);
                         filteredPlaces.setAll(allPlaces);
                         updateInfo(filteredPlaces);
@@ -151,7 +151,7 @@ public class EditPlacesController {
                 controllerForAdd.setDialog(dialog);
                 controllerForAdd.setCategoriesList(allCategories);
                 controllerForAdd.setCategoryCallback(newCategory -> {
-                    connection.sendObject(new AdminRequest("addCategory",newCategory));
+                    connection.sendObject(new AdminRequest("addCategory",newCategory,Model.getInstance().getCurrentUser().getLogin()));
                     allCategories.add(newCategory);
                 });
                 dialog.showAndWait();
@@ -179,7 +179,7 @@ public class EditPlacesController {
                 controller.setSelectedPlace(selectedPlace);
                 controller.setMaterialAddedCallback(modifiedPlace -> {
                     if(modifiedPlace != null) {
-                        connection.sendObject(new AdminRequest("editPlace", selectedPlace, modifiedPlace));
+                        connection.sendObject(new AdminRequest("editPlace", selectedPlace, modifiedPlace,Model.getInstance().getCurrentUser().getLogin()));
                         String request = (String) connection.receiveObject();
                         if(request.contains("обновлено")){
                             NotificationUtil.showNotification(notificationPane,request);

@@ -14,6 +14,7 @@ public class ClientRequest implements Serializable {
     private int orderNumber;
     private ReportModel report;
     private double wallet;
+    private String clientLogin;
 
     public ClientRequest(String request) {
         this.request = request;
@@ -31,9 +32,10 @@ public class ClientRequest implements Serializable {
         this.user = user;
     }
 
-    public ClientRequest(String request,Orders order) {
+    public ClientRequest(String request,Orders order, String clientLogin) {
         this.request = request;
         this.order = order;
+        this.clientLogin = clientLogin;
     }
 
     public ClientRequest(String request,Users user) {
@@ -59,4 +61,5 @@ public class ClientRequest implements Serializable {
     public int getOrderNumber() {return orderNumber;}
     public ReportModel getReport() {return report;}
     public double getWallet() {return wallet;}
+    public String getClientLogin() {return clientLogin;}
 }

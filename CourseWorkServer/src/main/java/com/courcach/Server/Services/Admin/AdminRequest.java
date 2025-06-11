@@ -24,30 +24,29 @@ public class AdminRequest implements Serializable {
         this.request = request;
     }
 
-    public AdminRequest(String request, Users user) {
-        this.request = request;
-        this.user = user;
-    }
-
-    public AdminRequest(String request,String category){
+    public AdminRequest(String request,String category, String adminLogin) {
         this.request = request;
         this.category = category;
+        this.adminLogin = adminLogin;
     }
 
-    public AdminRequest(String request, Places place) {
+    public AdminRequest(String request, Places place, String adminLogin) {
         this.request = request;
         this.place = place;
+        this.adminLogin = adminLogin;
     }
 
-    public AdminRequest(String request,Places place, Places place1) {
+    public AdminRequest(String request,Places place, Places place1, String adminLogin) {
         this.request = request;
         this.place = place;
         this.selectedPlace = place1;
+        this.adminLogin = adminLogin;
     }
 
-    public AdminRequest(String request, Orders order){
+    public AdminRequest(String request, Orders order, String adminLogin) {
         this.request = request;
         this.order = order;
+        this.adminLogin = adminLogin;
     }
 
     public AdminRequest(String request, LocalDate firstDate, LocalDate lastDate){

@@ -200,7 +200,7 @@ public class  AddNewOrderController {
             newOrder.setUserLogin(Model.getInstance().getCurrentUser().getLogin());
             newOrder.setTotalPrice(resulPrice);
             newOrder.setOrderPlaces(myOrders);
-            connect.sendObject(new ClientRequest("addNewOrder",newOrder));
+            connect.sendObject(new ClientRequest("addNewOrder",newOrder,Model.getInstance().getCurrentUser().getLogin()));
             NotificationUtil.showNotification(notificationPane,"Заказ успешно создан");
             myOrders.clear();
             counter.setText("0");

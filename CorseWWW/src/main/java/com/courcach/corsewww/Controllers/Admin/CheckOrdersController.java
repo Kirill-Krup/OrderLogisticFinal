@@ -150,8 +150,8 @@ public class CheckOrdersController {
             currentOrdersController.setButDisable();
         }else{
             currentOrdersController.setCancelBut(()->{
-                connect.sendObject(new AdminRequest("deleteOrder",order));
-                NotificationUtil.showNotification(notificationPane,"Заказ №"+order.getOrderNumber()+" успешно удалён");
+                connect.sendObject(new AdminRequest("deleteOrder",order,Model.getInstance().getCurrentUser().getLogin()));
+                NotificationUtil.showNotification(notificationPane,"Заказ № "+order.getOrderNumber() + " успешно удалён");
                 allHistory.remove(order);
                 refreshOthersList();
             });

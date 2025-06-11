@@ -92,7 +92,7 @@ public class ReportsWorkController {
                 AnchorPane selectedPane = listForReports.getSelectionModel().getSelectedItem();
                 ReportRowForEmployeeController controller = (ReportRowForEmployeeController) selectedPane.getProperties().get("controller");
                 ReportModel report = new ReportModel(controller.getReport().getOrderNumber(),answerField.getText(),currentTime);
-                connection.sendObject(new EmployeeRequest("answerForUser",report));
+                connection.sendObject(new EmployeeRequest("answerForUser",report,Model.getInstance().getCurrentUser().getLogin()));
                 String request =(String) connection.receiveObject();
                 if(request.contains("успешно")){
                     NotificationUtil.showNotification(notificationPane,request);

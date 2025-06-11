@@ -1,10 +1,12 @@
 package com.courcach.Server.Handlers;
 
+import com.courcach.Server.Services.ClassesForRequests.Log;
 import com.courcach.Server.Services.ClassesForRequests.Orders;
 import com.courcach.Server.Services.ClassesForRequests.Places;
 import com.courcach.Server.Services.ClassesForRequests.ReportModel;
 import com.courcach.Server.Services.Client.ClientRequest;
 import com.courcach.Server.Services.Client.ClientResponse.ClientOrderResponse;
+import com.courcach.Server.Services.LogService;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,6 +25,7 @@ public class ClientHandler extends RoleHandler {
             ClientRequest request = (ClientRequest) in.readObject();
             if(request instanceof ClientRequest) {
                 ClientOrderResponse orderResponse = new ClientOrderResponse();
+                LogService logService = new LogService();
                 switch (request.getRequest()){
                     case "giveMeAllMaterials"->{
                         List<Places> allPlaces =orderResponse.getPlaces();
@@ -31,12 +34,13 @@ public class ClientHandler extends RoleHandler {
                     }
                     case "addNewOrder"->{
                         orderResponse.newOrder(request.getOrder());
+                        logService.addLog(new Log(request.getClientLogin(), "Новый заказ №" + request.getOrder().getOrderNumber() + " на сумму " + request.getOrder().getTotalPrice()));
                     }
 
                     case "replenishmentWallet"->{
                         double newWalletValue = request.getSum()+request.getUser().getWallet();
-                        System.out.println(newWalletValue+ " "+ request.getUser().getLogin());
                         orderResponse.updateWallet(request.getUser().getLogin(),newWalletValue);
+                        logService.addLog(new Log(request.getUser().getLogin(), "Пользователь пополнил кошелёк на " + request.getSum() + ". На балансе " + newWalletValue));
                     }
 
                     case "giveMeMyActiveOrders"->{
@@ -53,6 +57,7 @@ public class ClientHandler extends RoleHandler {
 
                     case "cancelOrder"->{
                         orderResponse.cancelOrder(request.getOrderNumber());
+                        logService.addLog(new Log(request.getUser().getLogin(), "Пользователь отменил заказ №" + request.getOrderNumber()));
                         List<Orders> activeOrders = orderResponse.getActiveUserOrders(request.getUser().getLogin());
                         out.writeObject(activeOrders);
                         out.flush();
@@ -68,6 +73,9 @@ public class ClientHandler extends RoleHandler {
 
                     case "newReport"->{
                         ClientOrderResponse req= orderResponse.newReport(request.getReport());
+                        if(req.getMessage().contains("успешно")){
+                            logService.addLog(new Log(request.getReport().getUserLogin(), "Пользователь оставил отзыв: " + request.getReport().getReportMessange()));
+                        }
                         out.writeObject(req.getMessage());
                         out.flush();
                     }
@@ -80,6 +88,7 @@ public class ClientHandler extends RoleHandler {
 
                     case "onlineBuy"->{
                         orderResponse.updateWallet(request.getUser().getLogin(),request.getWallet());
+                        logService.addLog(new Log(request.getUser().getLogin(), "Пользователь оформил онлайн заказ, сняты деньги. Новое значение кошелька: " + request.getWallet()));
                     }
 
                     case "checkAnswers" ->{

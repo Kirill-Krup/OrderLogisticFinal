@@ -44,9 +44,11 @@ public class AdminHandler extends RoleHandler {
                     }
                     case "delUser"->{
                         service.delUser(request.getUser().getLogin());
+                        logService.addLog(new Log(request.getAdminLogin(), "Удаление пользователя " + request.getUser().getLogin()));
                     }
                     case "giveEmployeeStatus"->{
                         service.giveEmployeeStatus(request.getUser().getLogin());
+                        logService.addLog(new Log(request.getAdminLogin(), "Выдан статус работника пользователю " + request.getUser().getLogin()));
                     }
 
                     // WORK WITH PLACES
@@ -58,6 +60,7 @@ public class AdminHandler extends RoleHandler {
 
                     case "delPlace"->{
                         placesService.delUser(request.getPlace().getPlaceName());
+                        logService.addLog(new Log(request.getAdminLogin(), "Удалён товар " + request.getPlace().getPlaceName()));
                     }
 
                     case "giveMeAllCategories"->{
@@ -68,14 +71,22 @@ public class AdminHandler extends RoleHandler {
 
                     case "addPlace"->{
                         placesService.addPlace(request.getPlace());
+                        logService.addLog(new Log(request.getAdminLogin(), "Добавлен товар " + request.getPlace().getPlaceName()));
                     }
 
                     case "addCategory"->{
                         placesService.addNewCategory(request.getCategory());
+                        logService.addLog(new Log(request.getAdminLogin(), "Добавлена новая категория " + request.getCategory()));
                     }
 
                     case "editPlace"->{
-                        System.out.println(request.getSelectedPlace().getPlaceName()+" " + request.getPlace().getPlaceName());
+                        logService.addLog(new Log(request.getAdminLogin(), "Изменён товар с: " + request.getPlace().getPlaceName() + " "
+                                + request.getPlace().getDescription() + " " + request.getPlace().getPrice() + " " + request.getPlace().getQuantity()
+                                + " " + request.getPlace().getCategory()
+                                + " На: " + request.getSelectedPlace().getPlaceName() + " "
+                                + request.getSelectedPlace().getDescription() + " " + request.getSelectedPlace().getPrice()
+                                + " " + request.getSelectedPlace().getQuantity()
+                                + " " + request.getSelectedPlace().getCategory()));
                         String req = placesService.editPlace(request.getPlace(), request.getSelectedPlace());
                         out.writeObject(req);
                         out.flush();
@@ -89,6 +100,7 @@ public class AdminHandler extends RoleHandler {
 
                     case "deleteOrder"->{
                         orderService.deleteOrder(request.getOrder().getOrderNumber());
+                        logService.addLog(new Log(request.getAdminLogin(), "Удалён заказ №" + request.getOrder().getOrderNumber()));
                     }
 
                     case "giveMeOrdersInDates"->{
