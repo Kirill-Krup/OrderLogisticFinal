@@ -35,6 +35,7 @@
             <Button fx:id="marksBut" layoutX="107.0" layoutY="328.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="209.0" styleClass="menuPane" text="Работа с отзывами" textFill="WHITE" />
 
             <Button fx:id="exitBut" layoutX="168.0" layoutY="548.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="120.0" styleClass="menuPane" text="Выйти" textFill="WHITE" />
+            <Button fx:id="logsButton" layoutX="109.0" layoutY="386.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="209.0" styleClass="menuPane" text="Логи системы" textFill="WHITE" />
          </children>
       </Pane>
    </children>

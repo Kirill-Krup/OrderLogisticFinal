@@ -1,8 +1,9 @@
 package com.courcach.Server.Services.ClassesForRequests;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Log {
+public class Log implements Serializable {
     private String login;
     private String log;
     private Timestamp date;

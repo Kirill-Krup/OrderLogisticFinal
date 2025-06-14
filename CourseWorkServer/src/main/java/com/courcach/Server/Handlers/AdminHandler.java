@@ -115,6 +115,12 @@ public class AdminHandler extends RoleHandler {
                         out.flush();
                     }
 
+                    case "giveMeAllLogs" ->{
+                        List<Log> allLogs = logService.takeAllLogs();
+                        out.writeObject(allLogs);
+                        out.flush();
+                    }
+
                     case "exit"->{
                         exit = true;
                     }

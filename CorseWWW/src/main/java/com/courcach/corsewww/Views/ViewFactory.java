@@ -46,6 +46,11 @@ public class ViewFactory {
         createStage(fxmlLoader);
     }
 
+    public  void showLogsWindow() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Admin/Logs.fxml"));
+        createStage(fxmlLoader);
+    }
+
     // Client section
     public  void showClientWindow() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Client/Client.fxml"));

@@ -27,6 +27,9 @@ public class AdminController {
     @FXML
     private Text textName;
 
+    @FXML
+    private Button logsButton;
+
     public void initialize() {
         textName.setText(Model.getInstance().getCurrentUser().getLogin());
         checkOrdersBut.setOnAction((event) -> {
@@ -51,6 +54,12 @@ public class AdminController {
            Stage stage = (Stage) marksBut.getScene().getWindow();
            Model.getInstance().getViewFactory().closeStage(stage);
            Model.getInstance().getViewFactory().showMarksWindow();
+        });
+
+        logsButton.setOnAction((event) -> {
+            Stage stage = (Stage) logsButton.getScene().getWindow();
+            Model.getInstance().getViewFactory().closeStage(stage);
+            Model.getInstance().getViewFactory().showLogsWindow();
         });
 
         exitBut.setOnAction((event) -> {
