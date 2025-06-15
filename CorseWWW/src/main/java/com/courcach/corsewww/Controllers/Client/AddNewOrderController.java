@@ -230,7 +230,7 @@ public class  AddNewOrderController {
     private void initialLists(){
         myOrders = new ArrayList<>();
         ObservableList<String> items = FXCollections.observableArrayList("Самовывоз", "Доставка");
-        ObservableList<String> addresses = FXCollections.observableArrayList("ул. Ленина 10, ТЦ Столица, 1 этаж", "пр. Независимости 46, ТЦ Галерея, 2ой этаж", "ул. Притыцкого 156, ТЦ Тивали, 2 этаж", "ул. Кальварийская 6, ТЦ Экспобел", "ул. Янки Купалы 17, ТЦ Европа, -1 этаж");
+        ObservableList<String> addresses = FXCollections.observableArrayList("пр. Независимости 3/2, ТЦ Столица, 1 этаж", "пр. Победителей 9, ТЦ Галерея, 2ой этаж", "ул. Притыцкого 29, ТЦ Тивали, 2 этаж", "ул. Леонида Беды 4", "ул. Братская 18, ТЦ Авиа Молл, 1 этаж");
         ObservableList<String> paymentTypes = FXCollections.observableArrayList("При получении","Онлайн");
         selectTypeOfDelivery.setItems(items);
         typeOfPaintment.setItems(paymentTypes);

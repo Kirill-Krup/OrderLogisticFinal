@@ -1,10 +1,10 @@
 module com.courcach.corsewww {
-    requires javafx.controls;
     requires javafx.fxml;
-    requires java.desktop;
     requires jdk.jdi;
     requires CourseWorkServer;
     requires java.sql;
+    requires javafx.web;
+    requires javafx.controls;
 
     opens com.courcach.corsewww to javafx.fxml;
     opens com.courcach.corsewww.Controllers to javafx.fxml;

@@ -12,7 +12,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+
+import java.net.URL;
 
 public class ClientController {
     @FXML
@@ -66,7 +69,11 @@ public class ClientController {
     @FXML
     private StackPane notificationPane;
 
+    @FXML
+    private WebView mapCon;
+
     public void initialize() {
+        initializeMap();
         ConnectionToServer connect = Model.getInstance().getConnectionToServer();
         connect.sendObject(new ClientRequest("giveMeNewMessages",Model.getInstance().getCurrentUser()));
         boolean check = (Boolean) connect.receiveObject();
@@ -124,6 +131,7 @@ public class ClientController {
         });
 
         aboutUsBut.setOnAction(e -> {
+            aboutUsPane.setMouseTransparent(false);
             aboutUsPane.setOpacity(1);
             aboutUsBut.setUnderline(true);
             homeText.setUnderline(false);
@@ -131,6 +139,7 @@ public class ClientController {
 
         backFromAboutUsBut.setOnAction(e -> {
            aboutUsPane.setOpacity(0);
+            aboutUsPane.setMouseTransparent(true);
             aboutUsBut.setUnderline(false);
             homeText.setUnderline(true);
         });
@@ -141,5 +150,14 @@ public class ClientController {
             Model.getInstance().getViewFactory().closeStage(stage);
             Model.getInstance().getViewFactory().showLoginWindow();
         });
+    }
+
+    private void initializeMap() {
+        URL htmlMap = getClass().getResource("/Map/Map.html");
+        if(htmlMap != null){
+            mapCon.getEngine().load(htmlMap.toExternalForm());
+        }else{
+            NotificationUtil.showErrorNotification(notificationPane,"Карта не найдена. Файл не был загружен");
+        }
     }
 }
