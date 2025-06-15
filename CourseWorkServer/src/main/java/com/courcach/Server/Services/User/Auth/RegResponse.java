@@ -1,6 +1,4 @@
-package com.courcach.Server.Services;
-
-import java.io.Serializable;
+package com.courcach.Server.Services.User.Auth;
 
 public class RegResponse implements java.io.Serializable {
     private final boolean success;

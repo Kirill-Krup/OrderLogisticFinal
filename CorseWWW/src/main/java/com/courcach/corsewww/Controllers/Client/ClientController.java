@@ -153,7 +153,7 @@ public class ClientController {
     }
 
     private void initializeMap() {
-        URL htmlMap = getClass().getResource("/Map/Map.html");
+        URL htmlMap = getClass().getResource("/HTML/Map.html");
         if(htmlMap != null){
             mapCon.getEngine().load(htmlMap.toExternalForm());
         }else{

@@ -1,7 +1,5 @@
 package com.courcach.corsewww.Models;
 
-import com.courcach.Server.Services.RegRequest;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

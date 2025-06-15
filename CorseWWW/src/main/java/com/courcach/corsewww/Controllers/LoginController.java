@@ -1,7 +1,7 @@
 package com.courcach.corsewww.Controllers;
 
-import com.courcach.Server.Services.AuthRequest;
-import com.courcach.Server.Services.AuthResponse;
+import com.courcach.Server.Services.User.Auth.AuthRequest;
+import com.courcach.Server.Services.User.Auth.AuthResponse;
 import com.courcach.Server.Services.ClassesForRequests.Users;
 import com.courcach.corsewww.Models.ConnectionToServer;
 import com.courcach.corsewww.Models.Model;
@@ -30,12 +30,21 @@ public class LoginController {
     @FXML
     private StackPane notificationPane;
 
+    @FXML
+    private Button forgotPasswordBut;
+
 
     public void initialize() {
         signUpTab.setOnAction(e -> {
             Stage stage = (Stage) signUpTab.getScene().getWindow();
             Model.getInstance().getViewFactory().closeStage(stage);
             Model.getInstance().getViewFactory().showRegistrationWindow();
+        });
+
+        forgotPasswordBut.setOnAction(e -> {
+            Stage stage = (Stage) forgotPasswordBut.getScene().getWindow();
+            Model.getInstance().getViewFactory().closeStage(stage);
+            Model.getInstance().getViewFactory().showForgotPasswordWindow();
         });
 
         enterBut.setOnAction(e -> {

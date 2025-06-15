@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<DialogPane prefHeight="300.0" prefWidth="400.0" styleClass="dialog-root" stylesheets="@../../Styles/UserStyles/DialogForCaptcha.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.courcach.corsewww.Controllers.User.DialogForCaptchaController">
+
+    <content>
+        <VBox alignment="CENTER" prefHeight="361.0" prefWidth="400.0" spacing="20.0" styleClass="dialog-content">
+            <padding><Insets bottom="20" left="20" right="20" top="20" /></padding>
+
+            <Label styleClass="dialog-title" text="Подтверждение безопасности" />
+            <Label styleClass="dialog-description" text="Пожалуйста, решите математическую задачу:" />
+
+            <Label fx:id="captchaProblemLabel" prefHeight="55.0" prefWidth="279.0" styleClass="captcha-problem-label" />
+
+            <HBox alignment="CENTER" spacing="10.0">
+                <TextField fx:id="captchaAnswerField" promptText="Ваш ответ" styleClass="captcha-answer-field" />
+                <Button fx:id="submitButton" styleClass="submit-button" text="Проверить" />
+            </HBox>
+
+
+            <Button fx:id="backButton" prefHeight="35.0" prefWidth="120.0" styleClass="back-button" text="Назад" />
+        </VBox>
+    </content>
+</DialogPane>

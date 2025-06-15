@@ -1,9 +1,8 @@
 package com.courcach.corsewww.Controllers;
 
-import com.courcach.Server.Services.AuthRequest;
 import com.courcach.Server.Services.ClassesForRequests.Users;
-import com.courcach.Server.Services.RegRequest;
-import com.courcach.Server.Services.RegResponse;
+import com.courcach.Server.Services.User.Auth.RegRequest;
+import com.courcach.Server.Services.User.Auth.RegResponse;
 import com.courcach.corsewww.Models.ConnectionToServer;
 import com.courcach.corsewww.Models.Model;
 import com.courcach.corsewww.Views.NotificationUtil;
@@ -12,10 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.sql.Timestamp;
 
 public class RegistrationController {

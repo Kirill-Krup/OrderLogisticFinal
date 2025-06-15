@@ -1,0 +1,140 @@
+/* Основной фон и границы для корневого AnchorPane */
+.anchor-pane-root {
+    /* Современный, мягкий сине-фиолетовый градиент */
+    -fx-background-color: linear-gradient(to bottom right, #ADD8E6, #9370DB); /* Light Blue to Medium Purple */
+    -fx-border-color: #7b68ee; /* MediumSlateBlue - более насыщенный сиреневый для границы */
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    /* Мягкая тень для современного "плавающего" эффекта */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 8);
+}
+
+/* Стили для VBox, который содержит весь контент */
+.dialog-content {
+    -fx-alignment: center; /* Центрирование содержимого по горизонтали и вертикали */
+    -fx-spacing: 20px; /* Отступы между элементами в VBox */
+}
+
+/* Стили для заголовка диалога */
+.dialog-title {
+    -fx-font-size: 24px; /* Чуть крупнее */
+    -fx-font-weight: bold;
+    -fx-text-fill: #2f4f4f; /* DarkSlateGray - более глубокий темный цвет */
+    -fx-padding: 0 0 8px 0; /* Увеличенный отступ снизу */
+}
+
+/* Стили для описания диалога */
+.dialog-description {
+    -fx-font-size: 15px; /* Чуть крупнее */
+    -fx-text-fill: #4682b4; /* SteelBlue - синий оттенок для текста */
+    -fx-text-alignment: center; /* Выравнивание текста по центру */
+}
+
+/* Стили для каждого поля ввода цифры кода */
+.code-input {
+    -fx-pref-width: 45px; /* Чуть шире */
+    -fx-pref-height: 45px; /* Чуть выше */
+    -fx-font-size: 24px; /* Крупнее шрифт */
+    -fx-alignment: center; /* Центрирование текста внутри поля */
+    -fx-text-fill: #2f4f4f; /* Цвет текста */
+    -fx-background-color: transparent; /* СДЕЛАТЬ ФОН ПРОЗРАЧНЫМ */
+    -fx-border-width: 0px 0px 2px 0px; /* ТОЛЬКО НИЖНЯЯ ГРАНИЦА, толщина 2px */
+    -fx-border-color: #000000; /* DarkGray - цвет нижней границы */
+    -fx-border-radius: 0; /* Острые углы */
+    -fx-background-radius: 0;
+
+    -fx-faint-focus-color: transparent; /* Убирает дефолтный синий "оттенок" фокуса */
+    -fx-focus-color: #6a5acd; /* SlateBlue - насыщенный синий/фиолетовый при фокусе */
+    -fx-highlight-fill: #e6e6fa; /* Lavender - для выделения текста */
+    -fx-padding: 0 0 5px 0; /* Отступ снизу для текста от границы */
+}
+
+/* Стили для полей ввода кода, когда они в фокусе */
+.code-input:focused {
+    -fx-border-width: 0px 0px 3px 0px; /* Увеличиваем толщину нижней границы при фокусе */
+    -fx-border-color: #ffffff; /* SlateBlue - более яркий цвет при фокусе */
+}
+
+/* Стили для лейбла сообщения о статусе (ошибка/успех) */
+.status-message-label {
+    -fx-font-size: 14px; /* Чуть крупнее */
+    -fx-padding: 8px 15px; /* Увеличенный padding */
+    -fx-border-radius: 5px; /* Скругление углов */
+    -fx-background-radius: 5px;
+    -fx-text-fill: white;
+    -fx-background-color: transparent; /* По умолчанию прозрачный фон */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 3); /* Мягкая тень */
+}
+
+/* Стили для сообщения об ошибке */
+.status-message-label.error {
+    -fx-background-color: #e74c3c; /* Alizarin - более мягкий красный */
+    -fx-text-fill: white;
+}
+
+/* Стили для сообщения об успехе */
+.status-message-label.success {
+    -fx-background-color: #2ecc71; /* Emerald - более мягкий зеленый */
+    -fx-text-fill: white;
+}
+
+/* Стили для основной кнопки действия (Подтвердить) */
+.action-button {
+    -fx-background-color: #4CAF50; /* Зеленый */
+    -fx-text-fill: white;
+    -fx-font-size: 15px; /* Чуть крупнее */
+    -fx-font-weight: bold;
+    -fx-pref-width: 160px; /* Чуть шире */
+    -fx-pref-height: 40px; /* Чуть выше */
+    -fx-cursor: hand;
+    -fx-background-radius: 8px; /* Более скругленные углы */
+    -fx-border-radius: 8px;
+    -fx-padding: 10px 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 4); /* Более выраженная тень */
+}
+
+/* Стили для кнопки действия при наведении */
+.action-button:hover {
+    -fx-background-color: #45a049; /* Чуть темнее зеленый */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 5);
+}
+
+/* Стили для кнопки "Отправить еще раз" */
+.resend-button {
+    -fx-background-color: #95a5a6; /* Asbestos - современный серый */
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-pref-width: 220px;
+    -fx-pref-height: 40px;
+    -fx-cursor: hand;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-padding: 10px 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 4);
+}
+
+/* Стили для кнопки "Отправить еще раз" при наведении */
+.resend-button:hover {
+    -fx-background-color: #7f8c8d; /* Более темный серый */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 5);
+}
+
+/* Стили для кнопки "Отмена" */
+.cancel-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #7f8c8d; /* Темно-серый */
+    -fx-font-size: 14px;
+    -fx-pref-width: 110px;
+    -fx-pref-height: 35px;
+    -fx-cursor: hand;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: transparent;
+}
+
+/* Стили для кнопки "Отмена" при наведении */
+.cancel-button:hover {
+    -fx-text-fill: #34495e; /* Темно-синий */
+    -fx-background-color: rgba(0,0,0,0.05); /* Легкий фон */
+}

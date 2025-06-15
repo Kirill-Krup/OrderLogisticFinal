@@ -1,4 +1,4 @@
-package com.courcach.Server.Services;
+package com.courcach.Server.Services.User.Auth;
 
 public class RegRequest implements java.io.Serializable{
     private final String email;

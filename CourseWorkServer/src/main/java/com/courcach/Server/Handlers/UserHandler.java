@@ -2,7 +2,11 @@ package com.courcach.Server.Handlers;
 
 
 
-import com.courcach.Server.Services.*;
+import com.courcach.Server.Services.User.Auth.*;
+import com.courcach.Server.Services.User.ForgotPassword.ForgotPasswordRequest;
+import com.courcach.Server.Services.User.ForgotPassword.ForgotPasswordResponce;
+import com.courcach.Server.Services.User.ForgotPassword.ForgotPasswordService;
+import com.courcach.Server.Utils.MailUtil;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,6 +16,7 @@ import java.net.Socket;
 public class UserHandler implements Runnable {
     private final Socket userSocket;
     private final AuthService authService;
+    private String code;
 
     public UserHandler(Socket clientSocket) {
         this.userSocket = clientSocket;
@@ -48,6 +53,34 @@ public class UserHandler implements Runnable {
                     }else {
                         System.out.println(response.getMessage());
                     }
+                }
+                if(request instanceof ForgotPasswordRequest forgotPasswordRequest) {
+                    ForgotPasswordService forgotPasswordService = new ForgotPasswordService();
+                    switch(forgotPasswordRequest.getRequest()){
+                        case "forgotPassword"->{
+                            ForgotPasswordResponce passwordResponce = forgotPasswordService.checkMail(forgotPasswordRequest.getMail());
+                            if(passwordResponce.getResponce()){
+                                MailUtil mailUtil = new MailUtil();
+                                code = mailUtil.sendVerificationCode(forgotPasswordRequest.getMail());
+                                out.writeObject(passwordResponce);
+                                out.flush();
+                            }else{
+                                out.writeObject(passwordResponce);
+                                out.flush();
+                            }
+                        }
+
+                        case "checkCodeFromEmail"->{
+                            if(code.equals(String.valueOf(forgotPasswordRequest.getCode()))){
+                                out.writeObject(new ForgotPasswordResponce("ОТЛИЧНО, КОД ВЕРНЫЙ",true));
+                                out.flush();
+                            }else{
+                                out.writeObject(new ForgotPasswordResponce("АЙ АЙ АЙ НИНАДА ЧУЖИЕ АККАУНТЫ ВЗЛАМЫВАТЬ",false));
+                                out.flush();
+                            }
+                        }
+                    }
+
                 }
             }
 

@@ -1,4 +1,4 @@
-package com.courcach.Server.Services;
+package com.courcach.Server.Services.User.Auth;
 
 import com.courcach.Server.Services.ClassesForRequests.Users;
 

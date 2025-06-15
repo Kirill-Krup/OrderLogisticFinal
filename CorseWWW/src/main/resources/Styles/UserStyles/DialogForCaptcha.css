@@ -1,0 +1,78 @@
+
+.dialog-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.dialog-description {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555;
+}
+
+.captcha-problem-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+    -fx-padding: 10px;
+    -fx-background-color: #ecf0f1;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.captcha-answer-field {
+    -fx-pref-width: 150px;
+    -fx-pref-height: 30px;
+    -fx-font-size: 14px;
+    -fx-alignment: CENTER;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+.submit-button {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-pref-width: 100px;
+    -fx-pref-height: 30px;
+    -fx-cursor: hand;
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
+}
+
+.submit-button:hover {
+    -fx-background-color: #0056b3;
+}
+
+.status-message-label {
+    -fx-font-size: 12px;
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+.status-message-label.success-message {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+}
+
+.status-message-label.error-message {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
+}
+
+.back-button {
+    -fx-background-color: #6c757d;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-pref-width: 120px;
+    -fx-pref-height: 35px;
+    -fx-cursor: hand;
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
+}
+
+.back-button:hover {
+    -fx-background-color: #5a6268;
+}

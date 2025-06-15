@@ -19,6 +19,16 @@ public class ViewFactory {
         createStage(fxmlLoader);
     }
 
+    public  void showForgotPasswordWindow() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/User/ForgotPassword.fxml"));
+        createStage(fxmlLoader);
+    }
+
+    public  void showMailCodeWindow() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/User/MailCodeWindow.fxml"));
+        createStage(fxmlLoader);
+    }
+
 
     // Admin Section
     public  void showAdminWindow() {
@@ -51,6 +61,8 @@ public class ViewFactory {
         createStage(fxmlLoader);
     }
 
+
+
     // Client section
     public  void showClientWindow() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Client/Client.fxml"));
@@ -81,6 +93,7 @@ public class ViewFactory {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Client/ReportsWindow.fxml"));
         createStage(fxmlLoader);
     }
+
 
     // Employee section
     public  void showEmployeeWindow() {
